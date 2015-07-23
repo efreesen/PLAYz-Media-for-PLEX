@@ -916,7 +916,7 @@ Menu.prototype.optionsDialog = function(event)
 {
 	var self = this;
 	
-	if (localStorage.getItem(this.PLEX_OPTIONS_PREFIX + "enableTranscoding") == "1") {
+	if (localStorage.getItem(this.PLEX_OPTIONS_PREFIX + "enableTranscoding") != "0") {
 		$("#options a#optionTranscoding i").removeClass("unchecked");
 		$("#options a#optionTranscoding i").addClass("check");	
 	}
