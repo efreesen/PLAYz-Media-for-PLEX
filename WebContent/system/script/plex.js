@@ -21,11 +21,14 @@ function PLEX() {
 	this.PLEX_CACHE = "cache:";
 	this.PLEX_SHOW_HIDDEN_FILES = "plexHiddenFiles";
 	this.X_Plex_Client_Identifier = localStorage.getItem(this.PLEX_SESSION_ID);
-	this.X_Plex_Product = "Web%20Client";
-	this.X_Plex_Device= "Mac";
+	this.X_Plex_Chunked = "1";
+	this.X_Plex_Product = "Plex%20Web";
+	this.X_Plex_Version = "2.4.9";
 	this.X_Plex_Platform = "Chrome";
 	this.X_Plex_Platform_Version = "7";
 	this.X_Plex_Version = "1.2.12";
+	this.X_Plex_Platform_Version = "43.0";
+	this.X_Plex_Device = "Windows";
 	this.X_Plex_Device_Name = "Plex%2FWeb%20(Chrome)";
 	
 	var d = new Date();
@@ -306,7 +309,7 @@ PLEX.prototype.getMediaMetadata = function(key, callback) {
 };
 
 PLEX.prototype.reportProgress = function(key, state, time) {
-	$.get(this.getServerUrl() + "/:/progress?key=" + key + "&identifier=com.plexapp.plugins.library&time=" + Math.round(time) + "&state=" + state, null);
+    $.get(this.getServerUrl() + "/:/progress?key=" + key + "&identifier=com.plexapp.plugins.library&time=" + Math.round(time) + "&state=" + state, null);
 };
 
 PLEX.prototype.setWatched = function(key, callback) {
@@ -841,18 +844,21 @@ PLEX.prototype.getHlsTranscodeUrl = function(key, options) {
 	var session = localStorage.getItem(this.PLEX_SESSION_ID);
 	var mediaIndex = options.mediaIndex || "0";
 	var partIndex = options.partIndex || "0";
-	var protocol = options.protocol || "hls";
+	var protocol = options.protocol || "http";
 	var offset = options.offset || "0";
 	var fastSeek = options.fastSeek || "1";
-	var directPlay = options.directPlay || "1";
+	var directPlay = options.directPlay || "0";
 	var directStream = options.directStream || "1";
-	var videoQuality = options.videoQuality || "75";
 	var maxVideoBitrate = options.maxVideoBitrate || "3000";
 	var subtitleSize = options.subtitleSize || "90";
+	var videoQuality = options.videoQuality || "100";
 	var audioBoost = options.audioBoost || "100";
-	var videoResolution = "1920x1080";
+	var videoResolution = options.videoResolution || "1920x1080";
+	var burn = options.burnSubtitles || "burn";
+	var copyts = options.copyTs || "1";
+	var acceptLanguage = options.acceptLanguage || "en";
 
-	var url = "/video/:/transcode/universal/start.m3u8?";
+	var url = "/video/:/transcode/universal/start?";
 	url += "path=" + encodeURIComponent(path);
 	url += "&mediaIndex=" + mediaIndex;
 	url += "&partIndex=" + partIndex;
@@ -862,12 +868,16 @@ PLEX.prototype.getHlsTranscodeUrl = function(key, options) {
 	url += "&directPlay=" + directPlay;
 	url += "&directStream=" + directStream;
 	url += "&videoQuality=" + videoQuality;	
-	url += "&maxVideoBitrate=" + maxVideoBitrate;	
-	url += "&subtitleSize=" + subtitleSize;	
-	url += "&audioBoost=" + audioBoost;	
+	url += "&audioBoost=" + audioBoost;
+	url += "&maxVideoBitrate=" + maxVideoBitrate;
+	url += "&subtitleSize=" + subtitleSize;
 	url += "&videoResolution=" + videoResolution;	
 	url += "&videoQuality=" + videoQuality;	
 	url += "&session=" + session;
+	url += "&subtitles=" + burn;
+	url += "&copyts=" + copyts;
+	url += "&Accept-Language=" + acceptLanguage;
+
 	
 	url += "&X-Plex-Client-Identifier=" + this.X_Plex_Client_Identifier;
 	url += "&X-Plex-Product=" + this.X_Plex_Product;
