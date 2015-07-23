@@ -38,6 +38,9 @@
         while (range.moveStart('character', -1) !== 0) pos++;
         return pos;
       }
+      // Addition for jsdom support
+      if (target.selectionStart)
+        return target.selectionStart;
       //not supported
       return 0;
     }
@@ -57,14 +60,20 @@
     }
     //IE<9
     else if (document.body.createTextRange) {
-      var range = document.body.createTextRange();
-      range.moveToElementText(target);
-      range.moveStart('character', pos);
-      range.collapse(true);
-      range.select();
+      if (isContentEditable) {
+        var range = document.body.createTextRange();
+        range.moveToElementText(target);
+        range.moveStart('character', pos);
+        range.collapse(true);
+        range.select();
+      } else {
+        var range = target.createTextRange();
+        range.move('character', pos);
+        range.select();
+      }
     }
     if (!isContentEditable)
       target.focus();
     return pos;
   }
-})(jQuery)
+})(jQuery);
