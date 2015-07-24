@@ -17,7 +17,7 @@ and limitations under the License.
 function Player() {		
 	this.PLEX_OPTIONS_PREFIX = "plexOptions-";	
 	
-	this.directPlay = (localStorage.getItem(this.PLEX_OPTIONS_PREFIX + "enableTranscoding") == "1") ? false : true;
+	this.directPlay = (localStorage.getItem(this.PLEX_OPTIONS_PREFIX + "enableTranscoding") != "0") ? false : true;
 	
 	this.position = 0;
 	this.speed = 1;
