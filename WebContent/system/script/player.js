@@ -1,4 +1,4 @@
-﻿/**
+/**
 PLAYz Media (PLEX for LG Media Center)
 
 Copyright 2014 Simon J. Hogan (Sith'ari Consulting)
@@ -17,7 +17,7 @@ and limitations under the License.
 function Player() {		
 	this.PLEX_OPTIONS_PREFIX = "plexOptions-";	
 	
-	this.directPlay = (localStorage.getItem(this.PLEX_OPTIONS_PREFIX + "enableTranscoding") != "0") ? false : true;
+	this.directPlay = (localStorage.getItem(this.PLEX_OPTIONS_PREFIX + "enableTranscoding") == "1") ? false : true;
 	
 	this.position = 0;
 	this.speed = 1;
@@ -1043,181 +1043,181 @@ Player.prototype.timerControls = function() {
 
 Player.prototype.getLanguageCode = function(code) 
 { 
-        if (code == 'abk') { return 'ab'; }; 
-        if (code == 'aar') { return 'aa'; }; 
-        if (code == 'afr') { return 'af'; }; 
-        if (code == 'alb' || code == 'sqi') { return 'sq'; }; 
-        if (code == 'amh') { return 'am'; }; 
-        if (code == 'ara') { return 'ar'; }; 
-        if (code == 'arg') { return 'an'; }; 
-        if (code == 'arm' || code == 'hye') { return 'hy'; }; 
-        if (code == 'asm') { return 'as'; }; 
-        if (code == 'ave') { return 'ae'; }; 
-        if (code == 'aym') { return 'ay'; }; 
-        if (code == 'aze') { return 'az'; }; 
-        if (code == 'bak') { return 'ba'; }; 
-        if (code == 'baq' || code == 'eus') { return 'eu'; }; 
-        if (code == 'bel') { return 'be'; }; 
-        if (code == 'ben') { return 'bn'; }; 
-        if (code == 'bih') { return 'bh'; }; 
-        if (code == 'bis') { return 'bi'; }; 
-        if (code == 'bos') { return 'bs'; }; 
-        if (code == 'bre') { return 'br'; }; 
-        if (code == 'bul') { return 'bg'; }; 
-        if (code == 'bur' || code == 'mya') { return 'my'; }; 
-        if (code == 'cat') { return 'ca'; }; 
-        if (code == 'cha') { return 'ch'; }; 
-        if (code == 'che') { return 'ce'; }; 
-        if (code == 'chi' || code == 'zho') { return 'zh'; }; 
-        if (code == 'chu') { return 'cu'; }; 
-        if (code == 'chv') { return 'cv'; }; 
-        if (code == 'cor') { return 'kw'; }; 
-        if (code == 'cos') { return 'co'; }; 
-        if (code == 'scr' || code == 'hrv') { return 'hr'; }; 
-        if (code == 'cze' || code == 'ces') { return 'cs'; }; 
-        if (code == 'dan') { return 'da'; }; 
-        if (code == 'div') { return 'dv'; }; 
-        if (code == 'dut' || code == 'nld') { return 'nl'; }; 
-        if (code == 'dzo') { return 'dz'; }; 
-        if (code == 'eng') { return 'en'; }; 
-        if (code == 'epo') { return 'eo'; }; 
-        if (code == 'est') { return 'et'; }; 
-        if (code == 'fao') { return 'fo'; }; 
-        if (code == 'fij') { return 'fj'; }; 
-        if (code == 'fin') { return 'fi'; }; 
-        if (code == 'fre' || code == 'fra') { return 'fr'; }; 
-        if (code == 'gla') { return 'gd'; }; 
-        if (code == 'glg') { return 'gl'; }; 
-        if (code == 'geo' || code == 'kat') { return 'ka'; }; 
-        if (code == 'ger' || code == 'deu') { return 'de'; }; 
-        if (code == 'gre' || code == 'ell') { return 'el'; }; 
-        if (code == 'grn') { return 'gn'; }; 
-        if (code == 'guj') { return 'gu'; }; 
-        if (code == 'hat') { return 'ht'; }; 
-        if (code == 'hau') { return 'ha'; }; 
-        if (code == 'heb') { return 'he'; }; 
-        if (code == 'her') { return 'hz'; }; 
-        if (code == 'hin') { return 'hi'; }; 
-        if (code == 'hmo') { return 'ho'; }; 
-        if (code == 'hun') { return 'hu'; }; 
-        if (code == 'ice' || code == 'isl') { return 'is'; }; 
-        if (code == 'ido') { return 'io'; }; 
-        if (code == 'ind') { return 'id'; }; 
-        if (code == 'ina') { return 'ia'; }; 
-        if (code == 'ile') { return 'ie'; }; 
-        if (code == 'iku') { return 'iu'; }; 
-        if (code == 'ipk') { return 'ik'; }; 
-        if (code == 'gle') { return 'ga'; }; 
-        if (code == 'ita') { return 'it'; }; 
-        if (code == 'jpn') { return 'ja'; }; 
-        if (code == 'jav') { return 'jv'; }; 
-        if (code == 'kal') { return 'kl'; }; 
-        if (code == 'kan') { return 'kn'; }; 
-        if (code == 'kas') { return 'ks'; }; 
-        if (code == 'kaz') { return 'kk'; }; 
-        if (code == 'khm') { return 'km'; }; 
-        if (code == 'kik') { return 'ki'; }; 
-        if (code == 'kin') { return 'rw'; }; 
-        if (code == 'kir') { return 'ky'; }; 
-        if (code == 'kom') { return 'kv'; }; 
-        if (code == 'kor') { return 'ko'; }; 
-        if (code == 'kua') { return 'kj'; }; 
-        if (code == 'kur') { return 'ku'; }; 
-        if (code == 'lao') { return 'lo'; }; 
-        if (code == 'lat') { return 'la'; }; 
-        if (code == 'lav') { return 'lv'; }; 
-        if (code == 'lim') { return 'li'; }; 
-        if (code == 'lin') { return 'ln'; }; 
-        if (code == 'lit') { return 'lt'; }; 
-        if (code == 'ltz') { return 'lb'; }; 
-        if (code == 'mac' || code == 'mkd') { return 'mk'; }; 
-        if (code == 'mlg') { return 'mg'; }; 
-        if (code == 'may' || code == 'msa') { return 'ms'; }; 
-        if (code == 'mal') { return 'ml'; }; 
-        if (code == 'mlt') { return 'mt'; }; 
-        if (code == 'glv') { return 'gv'; }; 
-        if (code == 'mao' || code == 'mri') { return 'mi'; }; 
-        if (code == 'mar') { return 'mr'; }; 
-        if (code == 'mah') { return 'mh'; }; 
-        if (code == 'mol') { return 'mo'; }; 
-        if (code == 'mon') { return 'mn'; }; 
-        if (code == 'nau') { return 'na'; }; 
-        if (code == 'nav') { return 'nv'; }; 
-        if (code == 'nde') { return 'nd'; }; 
-        if (code == 'nbl') { return 'nr'; }; 
-        if (code == 'ndo') { return 'ng'; }; 
-        if (code == 'nep') { return 'ne'; }; 
-        if (code == 'sme') { return 'se'; }; 
-        if (code == 'nor') { return 'no'; }; 
-        if (code == 'nob') { return 'nb'; }; 
-        if (code == 'nno') { return 'nn'; }; 
-        if (code == 'nya') { return 'ny'; }; 
-        if (code == 'oci') { return 'oc'; }; 
-        if (code == 'ori') { return 'or'; }; 
-        if (code == 'orm') { return 'om'; }; 
-        if (code == 'oss') { return 'os'; }; 
-        if (code == 'pli') { return 'pi'; }; 
-        if (code == 'pan') { return 'pa'; }; 
-        if (code == 'per' || code == 'fas') { return 'fa'; }; 
-        if (code == 'pol') { return 'pl'; }; 
-        if (code == 'por' || code == 'pob') { return 'pt'; }; 
-        if (code == 'pus') { return 'ps'; }; 
-        if (code == 'que') { return 'qu'; }; 
-        if (code == 'roh') { return 'rm'; }; 
-        if (code == 'rum' || code == 'ron') { return 'ro'; }; 
-        if (code == 'run') { return 'rn'; }; 
-        if (code == 'rus') { return 'ru'; }; 
-        if (code == 'smo') { return 'sm'; }; 
-        if (code == 'sag') { return 'sg'; }; 
-        if (code == 'san') { return 'sa'; }; 
-        if (code == 'srd') { return 'sc'; }; 
-        if (code == 'scc' || code == 'srp') { return 'sr'; }; 
-        if (code == 'sna') { return 'sn'; }; 
-        if (code == 'iii') { return 'ii'; }; 
-        if (code == 'snd') { return 'sd'; }; 
-        if (code == 'sin') { return 'si'; }; 
-        if (code == 'slo' || code == 'slk') { return 'sk'; }; 
-        if (code == 'slv') { return 'sl'; }; 
-        if (code == 'som') { return 'so'; }; 
-        if (code == 'sot') { return 'st'; }; 
-        if (code == 'spa') { return 'es'; }; 
-        if (code == 'sun') { return 'su'; }; 
-        if (code == 'swa') { return 'sw'; }; 
-        if (code == 'ssw') { return 'ss'; }; 
-        if (code == 'swe') { return 'sv'; }; 
-        if (code == 'tgl') { return 'tl'; }; 
-        if (code == 'tah') { return 'ty'; }; 
-        if (code == 'tgk') { return 'tg'; }; 
-        if (code == 'tam') { return 'ta'; }; 
-        if (code == 'tat') { return 'tt'; }; 
-        if (code == 'tel') { return 'te'; }; 
-        if (code == 'tha') { return 'th'; }; 
-        if (code == 'tib' || code == 'bod') { return 'bo'; }; 
-        if (code == 'tir') { return 'ti'; }; 
-        if (code == 'ton') { return 'to'; }; 
-        if (code == 'tso') { return 'ts'; }; 
-        if (code == 'tsn') { return 'tn'; }; 
-        if (code == 'tur') { return 'tr'; }; 
-        if (code == 'tuk') { return 'tk'; }; 
-        if (code == 'twi') { return 'tw'; }; 
-        if (code == 'uig') { return 'ug'; }; 
-        if (code == 'ukr') { return 'uk'; }; 
-        if (code == 'urd') { return 'ur'; }; 
-        if (code == 'uzb') { return 'uz'; }; 
-        if (code == 'vie') { return 'vi'; }; 
-        if (code == 'vol') { return 'vo'; }; 
-        if (code == 'wln') { return 'wa'; }; 
-        if (code == 'wel' || code == 'cym') { return 'cy'; }; 
-        if (code == 'fry') { return 'fy'; }; 
-        if (code == 'wol') { return 'wo'; }; 
-        if (code == 'xho') { return 'xh'; }; 
-        if (code == 'yid') { return 'yi'; }; 
-        if (code == 'yor') { return 'yo'; }; 
-        if (code == 'zha') { return 'za'; }; 
-        if (code == 'zul') { return 'zu'; }; 
+        if (code == 'abk') { return 'ab'; }
+        if (code == 'aar') { return 'aa'; } 
+        if (code == 'afr') { return 'af'; } 
+        if (code == 'alb' || code == 'sqi') { return 'sq'; }
+        if (code == 'amh') { return 'am'; }
+        if (code == 'ara') { return 'ar'; }
+        if (code == 'arg') { return 'an'; }
+        if (code == 'arm' || code == 'hye') { return 'hy'; }
+        if (code == 'asm') { return 'as'; }
+        if (code == 'ave') { return 'ae'; }
+        if (code == 'aym') { return 'ay'; }
+        if (code == 'aze') { return 'az'; }
+        if (code == 'bak') { return 'ba'; }
+        if (code == 'baq' || code == 'eus') { return 'eu'; }
+        if (code == 'bel') { return 'be'; }
+        if (code == 'ben') { return 'bn'; }
+        if (code == 'bih') { return 'bh'; }
+        if (code == 'bis') { return 'bi'; }
+        if (code == 'bos') { return 'bs'; }
+        if (code == 'bre') { return 'br'; }
+        if (code == 'bul') { return 'bg'; }
+        if (code == 'bur' || code == 'mya') { return 'my'; }
+        if (code == 'cat') { return 'ca'; }
+        if (code == 'cha') { return 'ch'; }
+        if (code == 'che') { return 'ce'; }
+        if (code == 'chi' || code == 'zho') { return 'zh'; }
+        if (code == 'chu') { return 'cu'; }
+        if (code == 'chv') { return 'cv'; }
+        if (code == 'cor') { return 'kw'; }
+        if (code == 'cos') { return 'co'; }
+        if (code == 'scr' || code == 'hrv') { return 'hr'; }
+        if (code == 'cze' || code == 'ces') { return 'cs'; }
+        if (code == 'dan') { return 'da'; }
+        if (code == 'div') { return 'dv'; }
+        if (code == 'dut' || code == 'nld') { return 'nl'; }
+        if (code == 'dzo') { return 'dz'; }
+        if (code == 'eng') { return 'en'; }
+        if (code == 'epo') { return 'eo'; }
+        if (code == 'est') { return 'et'; }
+        if (code == 'fao') { return 'fo'; }
+        if (code == 'fij') { return 'fj'; }
+        if (code == 'fin') { return 'fi'; }
+        if (code == 'fre' || code == 'fra') { return 'fr'; }
+        if (code == 'gla') { return 'gd'; }
+        if (code == 'glg') { return 'gl'; }
+        if (code == 'geo' || code == 'kat') { return 'ka'; }
+        if (code == 'ger' || code == 'deu') { return 'de'; }
+        if (code == 'gre' || code == 'ell') { return 'el'; }
+        if (code == 'grn') { return 'gn'; }
+        if (code == 'guj') { return 'gu'; }
+        if (code == 'hat') { return 'ht'; }
+        if (code == 'hau') { return 'ha'; }
+        if (code == 'heb') { return 'he'; }
+        if (code == 'her') { return 'hz'; }
+        if (code == 'hin') { return 'hi'; }
+        if (code == 'hmo') { return 'ho'; }
+        if (code == 'hun') { return 'hu'; }
+        if (code == 'ice' || code == 'isl') { return 'is'; }
+        if (code == 'ido') { return 'io'; }
+        if (code == 'ind') { return 'id'; }
+        if (code == 'ina') { return 'ia'; }
+        if (code == 'ile') { return 'ie'; }
+        if (code == 'iku') { return 'iu'; }
+        if (code == 'ipk') { return 'ik'; }
+        if (code == 'gle') { return 'ga'; }
+        if (code == 'ita') { return 'it'; }
+        if (code == 'jpn') { return 'ja'; }
+        if (code == 'jav') { return 'jv'; }
+        if (code == 'kal') { return 'kl'; }
+        if (code == 'kan') { return 'kn'; }
+        if (code == 'kas') { return 'ks'; }
+        if (code == 'kaz') { return 'kk'; }
+        if (code == 'khm') { return 'km'; }
+        if (code == 'kik') { return 'ki'; }
+        if (code == 'kin') { return 'rw'; }
+        if (code == 'kir') { return 'ky'; }
+        if (code == 'kom') { return 'kv'; }
+        if (code == 'kor') { return 'ko'; }
+        if (code == 'kua') { return 'kj'; }
+        if (code == 'kur') { return 'ku'; }
+        if (code == 'lao') { return 'lo'; }
+        if (code == 'lat') { return 'la'; }
+        if (code == 'lav') { return 'lv'; }
+        if (code == 'lim') { return 'li'; }
+        if (code == 'lin') { return 'ln'; }
+        if (code == 'lit') { return 'lt'; }
+        if (code == 'ltz') { return 'lb'; }
+        if (code == 'mac' || code == 'mkd') { return 'mk'; }
+        if (code == 'mlg') { return 'mg'; }
+        if (code == 'may' || code == 'msa') { return 'ms'; }
+        if (code == 'mal') { return 'ml'; }
+        if (code == 'mlt') { return 'mt'; }
+        if (code == 'glv') { return 'gv'; }
+        if (code == 'mao' || code == 'mri') { return 'mi'; }
+        if (code == 'mar') { return 'mr'; }
+        if (code == 'mah') { return 'mh'; }
+        if (code == 'mol') { return 'mo'; }
+        if (code == 'mon') { return 'mn'; }
+        if (code == 'nau') { return 'na'; }
+        if (code == 'nav') { return 'nv'; }
+        if (code == 'nde') { return 'nd'; }
+        if (code == 'nbl') { return 'nr'; }
+        if (code == 'ndo') { return 'ng'; }
+        if (code == 'nep') { return 'ne'; }
+        if (code == 'sme') { return 'se'; }
+        if (code == 'nor') { return 'no'; }
+        if (code == 'nob') { return 'nb'; }
+        if (code == 'nno') { return 'nn'; }
+        if (code == 'nya') { return 'ny'; }
+        if (code == 'oci') { return 'oc'; }
+        if (code == 'ori') { return 'or'; }
+        if (code == 'orm') { return 'om'; }
+        if (code == 'oss') { return 'os'; }
+        if (code == 'pli') { return 'pi'; }
+        if (code == 'pan') { return 'pa'; }
+        if (code == 'per' || code == 'fas') { return 'fa'; }
+        if (code == 'pol') { return 'pl'; }
+        if (code == 'por' || code == 'pob') { return 'pt'; }
+        if (code == 'pus') { return 'ps'; }
+        if (code == 'que') { return 'qu'; }
+        if (code == 'roh') { return 'rm'; }
+        if (code == 'rum' || code == 'ron') { return 'ro'; }
+        if (code == 'run') { return 'rn'; }
+        if (code == 'rus') { return 'ru'; }
+        if (code == 'smo') { return 'sm'; }
+        if (code == 'sag') { return 'sg'; }
+        if (code == 'san') { return 'sa'; }
+        if (code == 'srd') { return 'sc'; }
+        if (code == 'scc' || code == 'srp') { return 'sr'; }
+        if (code == 'sna') { return 'sn'; }
+        if (code == 'iii') { return 'ii'; }
+        if (code == 'snd') { return 'sd'; }
+        if (code == 'sin') { return 'si'; }
+        if (code == 'slo' || code == 'slk') { return 'sk'; }
+        if (code == 'slv') { return 'sl'; }
+        if (code == 'som') { return 'so'; }
+        if (code == 'sot') { return 'st'; }
+        if (code == 'spa') { return 'es'; }
+        if (code == 'sun') { return 'su'; }
+        if (code == 'swa') { return 'sw'; }
+        if (code == 'ssw') { return 'ss'; }
+        if (code == 'swe') { return 'sv'; }
+        if (code == 'tgl') { return 'tl'; }
+        if (code == 'tah') { return 'ty'; }
+        if (code == 'tgk') { return 'tg'; }
+        if (code == 'tam') { return 'ta'; }
+        if (code == 'tat') { return 'tt'; }
+        if (code == 'tel') { return 'te'; }
+        if (code == 'tha') { return 'th'; }
+        if (code == 'tib' || code == 'bod') { return 'bo'; }
+        if (code == 'tir') { return 'ti'; }
+        if (code == 'ton') { return 'to'; }
+        if (code == 'tso') { return 'ts'; }
+        if (code == 'tsn') { return 'tn'; }
+        if (code == 'tur') { return 'tr'; }
+        if (code == 'tuk') { return 'tk'; }
+        if (code == 'twi') { return 'tw'; }
+        if (code == 'uig') { return 'ug'; }
+        if (code == 'ukr') { return 'uk'; }
+        if (code == 'urd') { return 'ur'; }
+        if (code == 'uzb') { return 'uz'; }
+        if (code == 'vie') { return 'vi'; }
+        if (code == 'vol') { return 'vo'; }
+        if (code == 'wln') { return 'wa'; }
+        if (code == 'wel' || code == 'cym') { return 'cy'; }
+        if (code == 'fry') { return 'fy'; }
+        if (code == 'wol') { return 'wo'; }
+        if (code == 'xho') { return 'xh'; }
+        if (code == 'yid') { return 'yi'; }
+        if (code == 'yor') { return 'yo'; }
+        if (code == 'zha') { return 'za'; }
+        if (code == 'zul') { return 'zu'; }
         
         return code; 
-}
+};
 
 Player.prototype.setWatchedStatus = function(key, duration, current)
 {
