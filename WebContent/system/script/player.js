@@ -848,7 +848,9 @@ Player.prototype.play = function(speed)
 	var self = this;
 	this.progressCount = 30;
 	
-	//$("#pause").focus();	
+	$("#pause").show();
+	$("#pause").focus();
+    $("#play").hide();
 	
 	this.media.playbackRate = speed;
 	this.media.play();
@@ -914,7 +916,9 @@ Player.prototype.forward = function()
 
 Player.prototype.pause = function()
 {
-	//$("#play").focus();
+    $("#play").show();
+	$("#play").focus();
+    $("#pause").hide();
 	this.setProgress(this.media.currentTime);
 	clearInterval(this.timer);
 	this.media.pause();
