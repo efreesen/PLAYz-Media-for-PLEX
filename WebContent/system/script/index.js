@@ -1,4 +1,4 @@
-﻿/**
+/**
 PLAYz Media (PLEX for LG Media Center)
 
 Copyright 2014 Simon J. Hogan (Sith'ari Consulting)
@@ -135,7 +135,7 @@ function Menu() {
 	        case 461:
 	        case 27:
 	            self.close();
-	            break
+	            break;
 	        default:
 	            if (!self.ischeckinfForPass && !self.isSettingPass) {
 
@@ -184,7 +184,7 @@ function Menu() {
 		$("#preview").fadeOut();
 		$("#navigator #sections a.selected").focus();
 	});	
-};
+}
 
 Menu.prototype.serverSelection = function()
 {
@@ -719,7 +719,7 @@ Menu.prototype.quickSelectionMenu = function(event)
 		                    var metadata = $(xml).find("MediaContainer:first");
 
 		                    var tracks = [];
-		                    $(metadata).find("Track").each(function () { tracks.push($(this).attr("index") + ". " + $(this).attr("title")) });
+		                    $(metadata).find("Track").each(function () { tracks.push($(this).attr("index") + ". " + $(this).attr("title")); });
 
 		                    if ($("#recentlyAdded a:focus").data("key") == $(current).data("key")) {
 		                        $("#previewContent").html(self.plex.getMediaHtml(metadata.attr("title2"), "album",
@@ -766,10 +766,10 @@ Menu.prototype.quickSelectionMenu = function(event)
 						var metadata = $(xml).find("Video:first");
 
 						var roles = [];
-						$(metadata).find("Role").each(function() { roles.push($(this).attr("tag")) });
+						$(metadata).find("Role").each(function() { roles.push($(this).attr("tag")); });
 
 						var genre = [];
-						$(metadata).find("Genre").each(function() { genre.push($(this).attr("tag")) });
+						$(metadata).find("Genre").each(function() { genre.push($(this).attr("tag")); });
 
 						
 						if ($("#recentlyAdded a:focus").data("key") == $(current).data("key")) {
@@ -812,7 +812,7 @@ Menu.prototype.quickSelectionMenu = function(event)
 							$("#preview").fadeIn();
 						}
 					});
-					break
+					break;
 				
 				case "channel":
 					//Do nothing
@@ -832,7 +832,7 @@ Menu.prototype.quickSelectionMenu = function(event)
 							$("#preview").fadeIn();
 						}
 					});
-					break
+					break;
 			}
 		});
 
@@ -1053,20 +1053,22 @@ Menu.prototype.optionsDialog = function(event)
 		
 		// Up Arrow		
 		if (event.which == 38) {
-			if (val >= 600) // max 10 minutes
-				val = 600
-			else
+			if (val >= 600) { // max 10 minutes
+				val = 600;
+            } else {
 				val++;
+            }
 			$(this).val(val);
 			event.preventDefault();
 		}
 		
 		// Down Arrow
 		if (event.which == 40) {
-			if (val <= 1) // min 1 second
-				val = 1
-			else
+			if (val <= 1) { // min 1 second
+				val = 1;
+            } else {
 				val--;
+            }
 			$(this).val(val);
 			event.preventDefault();	
 		}
@@ -1349,26 +1351,8 @@ Menu.prototype.setClock = function()
 	try {
 		var device = document.getElementById("device");
 		
-		/*if (device.getLocalTime) {
-			var now = device.getLocalTime();
-			var hours = now.hour;
-			var minutes = now.minute;
-			var seconds = now.second;
-			var ampm = hours >= 12 ? 'PM' : 'AM';
-			minutes = minutes < 10 ? '0'+minutes : minutes;
-			seconds = seconds < 10 ? '0'+seconds : seconds;
-			
-			if (localStorage.getItem(this.PLEX_OPTIONS_PREFIX + "time24") == "1") {
-				$("#clock").text(hours + ':' + minutes + ":" + seconds);
-			} else {
-				hours = hours % 12;
-				hours = hours ? hours : 12; // hour '0' should be '12'
-				$("#clock").text(hours + ':' + minutes + ":" + seconds + ' ' + ampm);
-			}
-		} else {*/
-			var now = new Date();
-			$("#clock").text(now.toLocaleTimeString());
-		//}
+        var now = new Date();
+        $("#clock").text(now.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit', second:'2-digit'}));
 	
 		if (self.debug) {
 			if (window.NetCastGetUsedMemorySize) {

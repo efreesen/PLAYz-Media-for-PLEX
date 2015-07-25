@@ -1,4 +1,4 @@
-﻿/**
+/**
 PLEX for LG Media Center
 
 Copyright 2014 Simon J. Hogan (Sith'ari Consulting)
@@ -62,9 +62,9 @@ body.xlarge {
 
 #navigator #clock {
 	position: relative;
-	top: 30px;
+	top: 25px;
 	left: 30px;
-	font-size: 90%;
+	font-size: 120%;
 	color: #aaa;		
 }
 
