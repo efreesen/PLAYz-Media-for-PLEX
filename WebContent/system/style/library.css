@@ -296,7 +296,7 @@ body.xlarge {
 li.media {
 	display: inline-block;
 	padding: 0;
-	margin: 5px;
+	margin: 7px;
 	list-style: none;
 	position: relative;
 }
@@ -304,7 +304,7 @@ li.media {
 li.media a {
 	display: block;
 	height: 190px;
-	width: 128px;	
+	width: 148px;	
 	overflow: hidden;
 	text-align: center;
 	text-decoration: none;
@@ -320,7 +320,7 @@ li.media a {
 li.media a div.thumb {
 	display: block;
 	height: 190px;
-	width: 128px;
+	width: 145px;
 	overflow: hidden;
 	text-align: center;
 	border-radius: 5px;
@@ -342,7 +342,7 @@ li.media a div.title {
 	position: absolute;
 	bottom: 30px;	
 	background-color: rgba(3,3,3,0.5);  
-	width: 124px;		
+	width: 95.4%;		
 }
 
 li.media a div.alt {
@@ -498,10 +498,10 @@ li.track a:focus, li.list a:focus  {
 	display: block;
 	color: #fff;
 	padding: 5px;	
-	font-size: 90%;
+	font-size: 95%;
 	overflow: hidden;
 	overflow: hidden;
-	max-height: 130px;
+	max-height: 100%;
 }
 
 .content .time {
@@ -829,7 +829,7 @@ li.track a:focus, li.list a:focus  {
 #mediaPreview {
 	position: absolute;
 	top: 0px;
-	left: 61px;
+	left: 70px;
 	right: 0px;
 	height: 100%;
 	overflow: hidden; 	
@@ -1069,7 +1069,7 @@ li.track a:focus, li.list a:focus  {
 	left: 0px;
 	top: 0px;
 	height: 100%;
-	width: 60px;	
+	width: 70px;	
 	padding: 4px;	
 	background-color: rgba(0,0,0,0.92);	
 	-webkit-box-sizing: border-box;  
@@ -1077,7 +1077,7 @@ li.track a:focus, li.list a:focus  {
 }
 
 #menu {
-	width: 52px;
+	width: 60px;
 	height: 100%;
 	float: right;
 	background-color: rgba(0,0,0,0.5);		
@@ -1100,7 +1100,7 @@ li.track a:focus, li.list a:focus  {
 #menu a {
 	display: inline-block;
 	text-decoration: none;
-	font-size: 26px;
+	font-size: 35px;
 	color: #ddd;	
 	padding: 5px 10px;
 	outline: none;	
@@ -1249,21 +1249,25 @@ li.track .playing {
 	padding-right: 10px;
 }
 
-
+.thumb {
+    padding: 0;
+    margin: 2px;
+    list-style: none;   
+}
 
 
 #children li.episode {
 	display: inline-block;
 	padding: 0;
-	margin: 5px;
+	margin: 8px;
 	list-style: none;
 	position: relative;
 }
 
 #children li.episode a {
 	display: block;
-	height: 140px;
-	width: 200px;	
+	height: 150px;
+	width: 232px;	
 	overflow: hidden;
 	text-align: center;
 	text-decoration: none;
@@ -1277,8 +1281,8 @@ li.track .playing {
 
 #children li.episode a div.thumb {
 	display: block;
-	height: 140px;
-	width: 200px;
+	height: 150px;
+	width: 229px;
 	overflow: hidden;
 	text-align: center;
 	border-radius: 5px;
@@ -1319,7 +1323,7 @@ li.track .playing {
 	position: absolute;
 	bottom: 5px;	
 	background-color: rgba(3,3,3,0.5);  
-	width: 196px;				
+	width: 228px;				
 }
 
 #children li.episode a:focus {
@@ -1410,13 +1414,13 @@ li.track .playing {
 
 .badge-lg {
 	padding: 4px 8px;
-	font-size: 14px;
+	font-size: 16px;
 	border-radius: 10px;
 }
 
 li.media.bigger a {
 	height: 270px;
-	width: 180px;
+	width: 186px;
 }
 
 li.media a div.thumb.bigger {
