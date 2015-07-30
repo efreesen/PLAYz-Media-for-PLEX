@@ -1,10 +1,10 @@
-![PLAYz Media - Bringing Plex to the LG Smart TV](http://playz.sithari.com.au/system/images/playz.png)
+![PLAYz Media - Bringing Plex to the LG WebOS 2](http://playz.sithari.com.au/system/images/playz.png)
 ==================================================================
-formally PLEX for LG Home Theater
+formally PLEX for LG WebOS 2
 
 http://playz.sithari.com.au
 
-Created by Simon J. Hogan
+Created by Simon J. Hogan / Modified by Braulio Ribeiro
 
 Sith'ari Consulting Australia
 ==================================================================
@@ -16,4 +16,7 @@ http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 
-
+=========================================================
+Modified by Braulio Ribeiro:
+Some of the changes is a custom interface for FullHD TV's and small improvements
+Tested on LG WebOS 2
