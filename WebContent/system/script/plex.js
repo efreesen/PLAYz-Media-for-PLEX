@@ -117,8 +117,13 @@ PLEX.prototype.getMediaType = function(title, sectionType) {
 };
 
 // Media library functions 
-PLEX.prototype.getPlaylists = function (callback) {
-    $.get(this.getServerUrl() + "/playlists/all", callback); //all is for unfiltered
+PLEX.prototype.getPlaylists = function (sortFormatted, callback) {
+    if (sortFormatted != "none")
+    {
+        $.get(this.getServerUrl() + "/playlists/all?sort=" + sortFormatted, callback); //all is for unfiltered
+    } else {
+        $.get(this.getServerUrl() + "/playlists/all", callback); //all is for unfiltered
+    }
 };
 
 PLEX.prototype.removeHiddenToken = function (title) {
@@ -206,8 +211,23 @@ PLEX.prototype.getSectionDetails = function(key, callback) {
 	$.get(this.getServerUrl() + "/library/sections/" + key , callback);
 };
 
+PLEX.prototype.getSectionFilterOptions = function (section, key, callback) {
+    if (section != "playlists" && section != "channels") {
+        $.get(this.getServerUrl() + "/library/sections/" + key + "/filters", callback);
+    }
+}
 
-PLEX.prototype.getSectionMedia = function(section, key, filter, filterKey, callback, options) {
+PLEX.prototype.getSectionSortOptions = function (section, key, callback) {
+    if (section == "playlists")
+    {
+        $.get(this.getServerUrl() + "/playlists/sorts", callback);
+    } else if (section != "channels")  {
+        $.get(this.getServerUrl() + "/library/sections/" + key + "/sorts", callback);
+    }
+}
+
+
+PLEX.prototype.getSectionMedia = function(section, key, view, viewKey, sort, callback, options) {
 	var jsonCallback = 'callback' + new Date().getTime();
 	var self = this;
 	var page = "";
@@ -221,24 +241,24 @@ PLEX.prototype.getSectionMedia = function(section, key, filter, filterKey, callb
 		page = "&X-Plex-Container-Start=" + options.start + "&X-Plex-Container-Size=" + options.size;	
 	}
 
-	if (filterKey) {
-		switch(filter) {
+	if (viewKey) {
+		switch(view) {
 			case "folder": 
 			case "all": 
-				filter = decodeURIComponent(filterKey);
-				if (filter.indexOf("?") > -1) {
-					$.get(this.getServerUrl() + filter + "&X-Plex-Access-Time=" + this.time + page, callback);
+				view = decodeURIComponent(viewKey);
+				if (view.indexOf("?") > -1) {
+					$.get(this.getServerUrl() + view + "&X-Plex-Access-Time=" + this.time + page, callback);
 				} else {
-					$.get(this.getServerUrl() + filter + "?X-Plex-Access-Time=" + this.time + page, callback);
+					$.get(this.getServerUrl() + view + "?X-Plex-Access-Time=" + this.time + page, callback);
 				}
 				break;
 
 			case "search": 
-				$.get(this.getServerUrl() + "/search?query=" + filterKey + page , callback);
+				$.get(this.getServerUrl() + "/search?query=" + viewKey + page , callback);
 				break;
 								
 			default:
-				$.get(this.getServerUrl() + "/library/sections/" + key + "/" + filter + "/" + filterKey + "?X-Plex-Access-Time=" + this.time + page, callback);		
+				$.get(this.getServerUrl() + "/library/sections/" + key + "/" + view + "/" + viewKey + "?X-Plex-Access-Time=" + this.time + page, callback);		
 				break;
 		}
 	} else {
@@ -252,14 +272,14 @@ PLEX.prototype.getSectionMedia = function(section, key, filter, filterKey, callb
 	            break;
 	        case "playlists":
 	            if (key == "playlists") {
-	                self.getPlaylists(callback);
+	                self.getPlaylists(sort, callback);
 	            } else {
 	                $.get(this.getServerUrl() + "/playlists/" + key + "/items/", callback);
                 }
 	            
 	            break;
 	        default:
-	            $.get(this.getServerUrl() + "/library/sections/" + key + "/" + filter + "?X-Plex-Access-Time=" + this.time + page, callback);
+	            $.get(this.getServerUrl() + "/library/sections/" + key + "/" + view + "?" + (sort != "none" ? "sort=" + sort + "&" : "") + "X-Plex-Access-Time=" + this.time + page, callback);
 	            break;
 	    }
 	}

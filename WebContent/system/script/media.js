@@ -19,6 +19,7 @@ function Media()
 	this.PLEX_OPTIONS_PREFIX = "plexOptions-";	
 	this.PLEX_CURRENT_PREFIX = "plexSelected-";
 	this.PLEX_LAST_VIEW_PREFIX = "plexLastView-";
+	this.PLEX_LAST_SORT_PREFIX = "plexLastSort-";
 	this.PLEX_CURRENT_PAGE_PREFIX = "plexStartView-"
 	
 	this.PLEX_VIEW_MODE = "plexViewMode";	
@@ -47,9 +48,18 @@ Media.prototype.initialise = function()
 	this.section = $.querystring().section;
 	this.key = $.querystring().key;
 	
-	this.filter = localStorage.getItem(this.PLEX_LAST_VIEW_PREFIX + this.key) ? localStorage.getItem(this.PLEX_LAST_VIEW_PREFIX + this.key) : "all";	
-	this.filter = $.querystring().filter ? $.querystring().filter : this.filter;
-	this.filterKey = $.querystring().filterkey;	
+	this.currentView = localStorage.getItem(this.PLEX_LAST_VIEW_PREFIX + this.key) ? localStorage.getItem(this.PLEX_LAST_VIEW_PREFIX + this.key) : "all";	
+	this.currentView = $.querystring().currentView ? $.querystring().currentView : this.currentView;
+	this.currentViewKey = $.querystring().currentViewkey;
+
+	this.currentFilter = localStorage.getItem(this.PLEX_LAST_FILTER_PREFIX + this.key) ? localStorage.getItem(this.PLEX_LAST_FILTER_PREFIX + this.key) : "none";
+	this.currentFilter = $.querystring().currentFilter ? $.querystring().currentFilter : this.currentFilter;
+	this.currentFilterKey = $.querystring().currentFilterkey;
+
+	this.currentSort = localStorage.getItem(this.PLEX_LAST_SORT_PREFIX + this.key) ? localStorage.getItem(this.PLEX_LAST_SORT_PREFIX + this.key) : "none";
+	this.currentSort = $.querystring().currentSort ? $.querystring().currentSort : this.currentSort;
+	this.currentSortKey = $.querystring().currentSortkey;
+
 	this.query = $.querystring().query;
 	this.viewStart = parseInt(localStorage.getItem(this.PLEX_CURRENT_PAGE_PREFIX + this.key)) || this.viewStart;
 	
@@ -158,17 +168,17 @@ Media.prototype.initialise = function()
 	
 	switch($.querystring().action) {
 		case "view":
-		    	if (this.section == "channels" || this.section == "playlists") {
+		    	if (this.section == "channels") {
 				$("#filter").hide();
 			} else {
 				this.loadMenu(this.section, this.key);
 			}
-			this.view(this.section, this.key, this.filter, this.filterKey, this.viewStart);	
+			this.view(this.section, this.key, this.currentView, this.currentViewKey, this.currentSort, this.viewStart);	
 			break;
 			
 		case "search":
 			$("#filter").hide();
-			this.view(this.section, this.key, "search", this.query, this.viewStart);		
+			this.view(this.section, this.key, "search", this.query, this.currentSort, this.viewStart);
 			break;			
 	}
 };
@@ -214,17 +224,17 @@ Media.prototype.nextPage = function()
 		
 		switch($.querystring().action) {
 			case "view":
-			    	if (this.section == "channels" || this.section == "playlists") {
+			    	if (this.section == "channels") {
 					$("#filter").hide();
 				} else {
 					this.loadMenu(this.section, this.key);
 				}
-				this.view(this.section, this.key, this.filter, this.filterKey, this.viewStart);	
+			    this.view(this.section, this.key, this.currentView, this.currentViewKey, this.currentSort, this.viewStart);
 				break;
 				
 			case "search":
 				$("#filter").hide();
-				this.view(this.section, this.key, "search", this.query, this.viewStart);		
+				this.view(this.section, this.key, "search", this.query, this.currentSort, this.viewStart);
 				break;			
 		}
 	}
@@ -240,17 +250,17 @@ Media.prototype.prevPage = function()
 					
 		switch($.querystring().action) {
 			case "view":
-				if (this.section == "channels" || this.section == "playlists") {
+				if (this.section == "channels") {
 					$("#filter").hide();
 				} else {
 					this.loadMenu(this.section, this.key);
 				}
-				this.view(this.section, this.key, this.filter, this.filterKey, this.viewStart);	
+				this.view(this.section, this.key, this.currentView, this.currentViewKey, this.currentSort, this.viewStart);
 				break;
 				
 			case "search":
 				$("#filter").hide();
-				this.view(this.section, this.key, "search", this.query, this.viewStart);		
+				this.view(this.section, this.key, "search", this.query, this.currentSort, this.viewStart);
 				break;			
 		}
 	}
@@ -263,6 +273,15 @@ Media.prototype.loadMenu = function(section, key)
 	this.showLoader("Loading");
 	
 	$("#menuFilterContent ul").empty();
+
+    // menu should not be showed under these cases
+
+	if (section == "channels" || (section == "playlists" && key != "playlists"))
+	{
+	    $("#filter").hide();
+	    return;
+	}
+
 	
 	this.plex.getSectionDetails(key, function(xml) {
 		//Set title
@@ -272,120 +291,191 @@ Media.prototype.loadMenu = function(section, key)
 		$("#menuFilterContent ul").empty();
 		$("#menuFilterContent ul").append("<li class=\"heading\">Views</li>");
 		$(xml).find("Directory[search!='1'][secondary!='1']").each(function(index, item) {
-			html = "<li><a href data-key-index=\"" + i++ + "\" data-action=\"view\" data-section=\"" + self.section + "\" data-key=\"" + self.key + "\" data-filter=\"" + $(this).attr("key") + "\">" + $(this).attr("title").replace("By ", "") + "</a></li>";
+		    html = "<li><a href data-key-index=\"" + i++ + "\" data-action=\"view\" data-section=\"" + self.section + "\" data-key=\"" + self.key + "\" data-filter=\"" + $(this).attr("key") + "\" data-secondary=0\"" +  "\">" + $(this).attr("title").replace("By ", "") + "</a></li>";
 			$("#menuFilterContent ul").append(html);
 		});
 
-		$("#menuFilterContent ul").append("<li class=\"heading\">Filters</li>");
 		$(xml).find("Directory[secondary='1']").each(function(index, item) {
-			html = "<li><a href data-key-index=\"" + i++ + "\" data-action=\"view\" data-section=\"" + self.section + "\" data-key=\"" + self.key + "\" data-filter=\"" + $(this).attr("key") + "\">" + $(this).attr("title").replace("By ", "") + "</a></li>";			$("#menuFilterContent ul").append(html);
+		    html = "<li><a href data-key-index=\"" + i++ + "\" data-action=\"view\" data-section=\"" + self.section + "\" data-key=\"" + self.key + "\" data-filter=\"" + $(this).attr("key") + "\" data-secondary=1\"" + "\">" + $(this).attr("title").replace("By ", "") + "</a></li>";
+		    $("#menuFilterContent ul").append(html);
 		});
-		
 		//$("#menuFilterContent a, #menuFilterView a").off();
-		
-		$("#menuFilterContent a, #menuFilterView a").hover(function() {
-			$(this).focus();
-		});
+	});
 
-		$("#menuFilterView a").keydown(function(event) {
-			
-			// Up Arrow		
-			if (event.which == 38) {
-				if ($(this).data("keyUp")) {
-					$($(this).data("keyUp")).focus();
-					event.preventDefault();
-				}
-			}
-			
-			// Down Arrow
-			if (event.which == 40) {
-				if ($(this).data("keyDown")) {
-					$($(this).data("keyDown")).focus();
-					event.preventDefault();
-				}	
-			}
-			
-			// Left Arrow
-			if (event.which == 37) {
-				if ($(this).data("keyLeft")) {
-					$($(this).data("keyLeft")).focus();
-					event.preventDefault();
-				}
-			}
-			
-			// Right Arrow
-			if (event.which == 39) {
-				if ($(this).data("keyRight")) {
-					$($(this).data("keyRight")).focus();
-					event.preventDefault();
-				}
-			}		
-		});		
-		
-		$("#thumbsView").click(function() {
-			localStorage.setItem(self.PLEX_VIEW_MODE, "thumbs");
-			self.view(self.section, self.key, self.filter, self.filterKey, self.viewStart);	
-			self.hideMenu();
-			event.preventDefault();
-		});
+	self.plex.getSectionFilterOptions(section, key, function (xml) {
+	    $("#menuFilterContent ul").append("<li class=\"heading\">Filters</li>");
 
-		$("#listView").click(function() {
-			localStorage.setItem(self.PLEX_VIEW_MODE, "list");
-			self.view(self.section, self.key, self.filter, self.filterKey, self.viewStart);
-			self.hideMenu();
-			event.preventDefault();
-		});
-		
-		$("#menuFilterContent a").click(function(event) {
-			self.filter = $(this).data("filter");
-			localStorage.setItem(self.PLEX_LAST_VIEW_PREFIX + $(this).data("key"), $(this).data("filter"));
-			self.clearDefaults(); 
-			self.filterKey = "";
-			self.view($(this).data("section"), $(this).data("key"), $(this).data("filter"), self.filterKey, 0);
-			self.hideMenu();
-			event.preventDefault();
-		});
-		
-		$("#menuFilterContent a").keydown(function(event) {
-			var index = $(this).data("keyIndex");
-			var up = $(this).parents("#menuFilterContent").find("li a[data-key-index='" + (Number(index)-1) + "']");
-			if ((Number(index)-1) < 0) {
-				up = $("#menuFilterView a:first");
-			}			
-			var down = $(this).parents("#menuFilterContent").find("li a[data-key-index='" + (Number(index)+1) + "']");
-			
-			// Up Arrow		
-			if (event.which == 38) {
-				event.preventDefault();
-				up.focus();
-			}
-			
-			// Down Arrow
-			if (event.which == 40) {
-				event.preventDefault();
-				down.focus();
-			}
-			
-			// Left Arrow
-			if (event.which == 37) {
-				event.preventDefault();
-				if (self.menuFlag) {
-					self.hideMenu();
-					$("#mediaView a:first").focus();
-				}					
-			}
-			
-			// Right Arrow
-			if (event.which == 39) {
-				event.preventDefault();
-				$("#filter").focus();			
-			}		
-		});	
-		
-	});	
+	    $(xml).find("Directory[filterType='boolean']").each(function (index, item) {
+	        html = "<li><a href data-key-index=\"" + i++ + "\" data-action=\"filter\" data-section=\"" + self.section + "\" data-key=\"" + self.key + "\" data-filter=\"" + $(this).attr("key") + "\" data-secondary=0\"" + "\">" + $(this).attr("title").replace("By ", "") + "</a></li>";
+	        $("#menuFilterContent ul").append(html);
+	    });
+
+	    $(xml).find("Directory[filterType!='boolean']").each(function (index, item) {
+	        html = "<li><a href data-key-index=\"" + i++ + "\" data-action=\"filter\" data-section=\"" + self.section + "\" data-key=\"" + self.key + "\" data-filter=\"" + $(this).attr("key") + "\" data-secondary=1\"" + "\">" + $(this).attr("title").replace("By ", "") + "</a></li>";
+	        $("#menuFilterContent ul").append(html);
+	    });
+	});
+
+	self.plex.getSectionSortOptions(section, key, function (xml) {
+	    $("#menuFilterContent ul").append("<li class=\"heading\">Sorts</li>");
+	    $(xml).find("Directory").each(function (index, item) {
+	        //todo add asc desn info and gui effect
+	        html = "<li><a href data-key-index=\"" + i++ + "\" data-action=\"sort\" data-section=\"" + self.section + "\" data-key=\"" + self.key + "\" data-filter=\"" + $(this).attr("key") + "\" data-default-direction=\"" + $(this).attr("defaultDirection") + "\">" + $(this).attr("title").replace("By ", "") + "</a></li>";
+	        $("#menuFilterContent ul").append(html);
+	    });
+
+	    $("#menuFilterContent a, #menuFilterView a").hover(function () {
+	        $(this).focus();
+	    });
+
+	    $("#menuFilterView a").keydown(function (event) {
+
+	        // Up Arrow		
+	        if (event.which == 38) {
+	            if ($(this).data("keyUp")) {
+	                $($(this).data("keyUp")).focus();
+	                event.preventDefault();
+	            }
+	        }
+
+	        // Down Arrow
+	        if (event.which == 40) {
+	            if ($(this).data("keyDown")) {
+	                $($(this).data("keyDown")).focus();
+	                event.preventDefault();
+	            }
+	        }
+
+	        // Left Arrow
+	        if (event.which == 37) {
+	            if ($(this).data("keyLeft")) {
+	                $($(this).data("keyLeft")).focus();
+	                event.preventDefault();
+	            }
+	        }
+
+	        // Right Arrow
+	        if (event.which == 39) {
+	            if ($(this).data("keyRight")) {
+	                $($(this).data("keyRight")).focus();
+	                event.preventDefault();
+	            }
+	        }
+	    });
+
+	    $("#thumbsView").click(function () {
+	        localStorage.setItem(self.PLEX_VIEW_MODE, "thumbs");
+	        self.view(self.section, self.key, self.currentView, self.currentViewKey, self.currentSort, self.viewStart);
+	        self.hideMenu();
+	        event.preventDefault();
+	    });
+
+	    $("#listView").click(function () {
+	        localStorage.setItem(self.PLEX_VIEW_MODE, "list");
+	        self.view(self.section, self.key, self.currentView, self.currentViewKey, self.currentSort, self.viewStart);
+	        self.hideMenu();
+	        event.preventDefault();
+	    });
+
+	    $("#menuFilterContent a").click(function (event) {
+
+//	        this.style.fontWeight = 'bold';
+	        switch ($(this).data("action"))
+	        {
+
+	            case "view":
+	                // todog
+	                // BOLD to mark a selected
+	                self.currentView = $(this).data("filter");
+	                localStorage.setItem(self.PLEX_LAST_VIEW_PREFIX + $(this).data("key"), self.currentView);;
+	                self.clearDefaults();
+	                self.currentViewKey = "";
+	                break;
+
+	            case "filter":
+	                break;
+	                //todog
+	                // add filter option stack
+	                // BOLD to mark a selected
+	            case "sort":
+	                // todog:
+	                // sort arrows to represent directions
+	                // BOLD to mark a selected
+	                var direction;
+	                if (self.currentSort == "none") {
+	                    self.currentSort = $(this).data("filter") + ":" + $(this).data("default-direction");
+	                    self.clearDefaults();
+	                    self.currentSortKey = "";
+	                }
+	                else {
+	                    var res = (self.currentSort).split(":");
+                        // if reversing existing sort
+	                    if (res[0] == $(this).data("filter")) { 
+	                        direction = (res[1] == "asc") ? "desc" : "asc";
+	                    } else {
+	                        direction = $(this).data("default-direction");
+	                    }
+	                    self.currentSort = $(this).data("filter") + ":" + direction;
+	                }
+
+	                
+
+	                localStorage.setItem(self.PLEX_LAST_SORT_PREFIX + $(this).data("key"), self.currentSort);
+	                self.clearDefaults();
+	                self.currentSortKey = "";
+
+	                break;
+	        }
+	        
+	            
+
+	       
+	        
+	        self.view($(this).data("section"), $(this).data("key"), self.currentView, self.currentViewKey, self.currentSort, 0);
+	        self.hideMenu();
+	        event.preventDefault();
+	    });
+
+	    $("#menuFilterContent a").keydown(function (event) {
+	        var index = $(this).data("keyIndex");
+	        var up = $(this).parents("#menuFilterContent").find("li a[data-key-index='" + (Number(index) - 1) + "']");
+	        if ((Number(index) - 1) < 0) {
+	            up = $("#menuFilterView a:first");
+	        }
+	        var down = $(this).parents("#menuFilterContent").find("li a[data-key-index='" + (Number(index) + 1) + "']");
+
+	        // Up Arrow		
+	        if (event.which == 38) {
+	            event.preventDefault();
+	            up.focus();
+	        }
+
+	        // Down Arrow
+	        if (event.which == 40) {
+	            event.preventDefault();
+	            down.focus();
+	        }
+
+	        // Left Arrow
+	        if (event.which == 37) {
+	            event.preventDefault();
+	            if (self.menuFlag) {
+	                self.hideMenu();
+	                $("#mediaView a:first").focus();
+	            }
+	        }
+
+	        // Right Arrow
+	        if (event.which == 39) {
+	            event.preventDefault();
+	            $("#filter").focus();
+	        }
+	    });
+	});
+
 };
 
-Media.prototype.view = function(section, key, filter, filterKey, start)	
+Media.prototype.view = function(section, key, filter, filterKey, sort, start)	
 {
 	this.rowCount = 0;
 	this.viewStart = start;
@@ -402,7 +492,7 @@ Media.prototype.view = function(section, key, filter, filterKey, start)
 	//console.log(key + " " + filter + " " + filterKey);
 	
 	// Load section content	
-	self.plex.getSectionMedia(section, key, filter, filterKey, function (xml) {
+	self.plex.getSectionMedia(section, key, filter, filterKey, sort, function (xml) {
 
 		var $container = $(xml).find("MediaContainer:first");
 		$("#title").stop(true, true);
@@ -495,7 +585,7 @@ Media.prototype.view = function(section, key, filter, filterKey, start)
                                 "viewCount": $(this).attr("viewCount"),
                                 "leafCount": $(this).attr("leafCount"),
                                 "viewedLeafCount": $(this).attr("viewedLeafCount"),
-                                "filter": self.filter,
+                                "filter": self.currentView,
                                 "sectionKey": actualKey,
                                 "section": mediaType
                             });
@@ -518,7 +608,7 @@ Media.prototype.view = function(section, key, filter, filterKey, start)
                                 "viewCount": $(this).attr("viewCount"),
                                 "leafCount": $(this).attr("leafCount"),
                                 "viewedLeafCount": $(this).attr("viewedLeafCount"),
-                                "filter": self.filter,
+                                "filter": self.currentView,
                                 "sectionKey": actualKey,
                                 "containerArt": $(xml).find("MediaContainer:first").attr("art"),
                                 "containerThumb": $(xml).find("MediaContainer:first").attr("thumb"),
@@ -579,7 +669,7 @@ Media.prototype.view = function(section, key, filter, filterKey, start)
 			event.preventDefault();
 			self.showLoader("Loading");
 			if ($(this).is("[data-filter]")) {
-				url = "./media.html?action=view&section=" + self.section + "&key=" + $(this).data("sectionKey") + "&filter=" + self.filter + "&filterkey=" + encodeURIComponent($(this).data("key"));
+				url = "./media.html?action=view&section=" + self.section + "&key=" + $(this).data("sectionKey") + "&filter=" + self.currentView + "&filterkey=" + encodeURIComponent($(this).data("key"));
 			} else {
 			    switch (self.section) {
 			        case "playlists":
