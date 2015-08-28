@@ -56,28 +56,7 @@ function Menu() {
 	if (localStorage.getItem(this.PLEX_OPTIONS_PREFIX + "largeText") == "1") {
 		$("body").addClass("xlarge");
 	}	
-	
-	this.debug = localStorage.getItem(this.PLEX_OPTIONS_PREFIX + "debug") == "1" ? true : false;
-	if (this.debug) {
-		var device = document.getElementById("device");
-		
-		html = "<table>";
-		html += "<tr><th>Platform</th><td>" + device.platform + "</td></tr>";
-		html += "<tr><th>Chipset</th><td>" + device.chipset + "</td></tr>";
-		html += "<tr><th>HW Version</th><td>" + device.hwVersion + "</td></tr>";
-		html += "<tr><th>SW Version</th><td>" + device.hwVersion + "</td></tr>";		
-		html += "<tr><th>SDK Version</th><td>" + device.SDKVersion + "</td></tr>";
-		html += "<tr><th>IP</td><th>" + device.net_ipAddress + "</td></tr>";		
-		html += "<tr><th>Language</td><th>" + device.tvLanguage2 + "</td></tr>";
-		html += "<tr><th>show hidden files</td><th>" + self.plex.getShouldShowHiddenFiles() + "</td></tr>";
-		if (window.NetCastGetUsedMemorySize) {
-			html += "<tr><th>Used Memory</th><td id=\"debugMemory\">" + window.NetCastGetUsedMemorySize() + "</td></tr>";		
-		}
-		html += "</table>";
-		$("#debug").html(html);				
-		$("#debug").show();
-		
-	}
+
 	
 	//Initialise Mousewheel scrolling
 	$("#navigator #sections").mousewheel(function(event) {
