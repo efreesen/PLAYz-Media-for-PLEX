@@ -21,6 +21,7 @@ function Player() {
 	
 	this.position = 0;
 	this.speed = 1;
+	this.state = 'stopped';
 	this.controlTimer = null;
 	this.scanStep = 300000;
 	this.scanStepRation = 30;	
@@ -213,13 +214,42 @@ Player.prototype.initialise = function()
 			event.preventDefault();
 			history.back(1);
 			return;
-		}	
+		}
+
+		if (event.which == 37) { //left
+		    event.stopPropagation();
+		    event.preventDefault();
+		    self.rewind();
+		    $("#skipBackward").focus();
+		    return;
+		}
 
 		if (event.which == 38) { //Up
-			self.showControls();
+		    event.stopPropagation();
+		    event.preventDefault();
+		    if (self.state == 'playing')
+		    {
+		        self.pause();
+		        $("#pause").focus();
+		    }
+		    else
+		    {
+		        self.speed = 1;
+		        self.play(self.speed);
+		        $("#play").focus();
+		    }
+		    
 			return;
 		}
 		
+		if (event.which == 39) { //right
+		    event.stopPropagation();
+		    event.preventDefault();
+		    self.forward();
+		    $("#skipForward").focus();
+		    return;
+		}
+        
 		if (event.which == 40) { //Down
 			if (self.downFromProgress) {
 				// if focus just moved down from the progress bar to media controls, don't hide the control bar
@@ -854,7 +884,8 @@ Player.prototype.play = function(speed)
 	
 	this.media.playbackRate = speed;
 	this.media.play();
-	//this.timerControls();	
+    //this.timerControls();	
+	this.state = 'playing';
 	self.hideControls();
 	
 	clearInterval(this.timer);
@@ -922,6 +953,7 @@ Player.prototype.pause = function()
 	this.setProgress(this.media.currentTime);
 	clearInterval(this.timer);
 	this.media.pause();
+	this.state = 'paused';
 };
 
 Player.prototype.stop = function()
@@ -934,8 +966,10 @@ Player.prototype.stop = function()
 	$("#message").fadeOut(3000);
 	
 	$.ajaxSetup({async: false}); // Make sure reportProgress is finished before history.back
-	this.plex.reportProgress(this.mediaKey, "stopped", this.media.currentTime*1000);
-	
+	this.plex.reportProgress(this.mediaKey, "stopped", this.media.currentTime * 1000);
+
+	this.state = 'stopped';
+
 	history.back(1);
 };
 

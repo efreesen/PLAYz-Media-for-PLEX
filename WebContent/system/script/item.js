@@ -28,6 +28,8 @@ MediaMetadata.prototype.initialise = function()
 	this.section = $.querystring().section;
 	this.sectionKey = $.querystring().sectionKey;
 	this.key = decodeURIComponent($.querystring().key);
+	this.grandparentkey = "";
+	this.parentkey = "";
 
 	$("#menu a").tooltipster({position: "right"});
 
@@ -137,6 +139,12 @@ MediaMetadata.prototype.initialise = function()
 		var mediaItem = $(xml).find("MediaContainer:first").children().first();
 		self.mediaKey = mediaItem.attr("ratingKey");
 		var mediaType = self.plex.hasLeaves ? "all" : mediaItem.attr("type");
+
+		if (mediaType == "episode") {
+		    self.grandparentKey = mediaItem.attr("grandparentKey");
+		    self.parentKey = mediaItem.attr("parentKey");
+		}
+
 		
 		$("#applicationWallpaper").css("background-image", "url(" + self.plex.getTranscodedPath(mediaItem.attr("art"), 1280, 720, mediaItem.attr("type") == "clip" ? true : false) + ")");
 		$("#mediaPreviewContent").html(self.plex.getMediaPreviewHtml(xml));
@@ -229,6 +237,55 @@ MediaMetadata.prototype.initialise = function()
 				event.preventDefault();
 				self.subtitleDialog();
 			});
+
+			if (mediaItem.attr("type") == "episode") {
+			    $("#relatedSeries").show();
+			    $("#relatedSeries").click(function (event) {
+			        event.preventDefault();
+			        self.loadRelatedSeries();
+			    });
+			    $("#relatedSeries").keydown(function (event) {
+			        event.preventDefault();
+			        if (event.which == 38)
+			        {
+			            $("#subtitles").focus();
+			        } else if (event.which == 40)
+			        {
+			            $("#watched").focus();
+			        }
+			        
+			    });
+
+			    $("#watched").keydown(function (event) {
+			        event.preventDefault();
+			        if (event.which == 38) {
+			            $("#relatedSeries").focus();
+			        } 
+			    });
+
+			    $("#subtitles").keydown(function (event) {
+			        event.preventDefault();
+			        if (event.which == 40) {
+			            $("#relatedSeries").focus();
+			        }
+
+			    });
+			} else {
+			    $("#subtitles").keydown(function (event) {
+			        event.preventDefault();
+			        if (event.which == 40) {
+		                $("#watched").focus();
+		            }
+			        
+			    });
+
+			    $("#watched").keydown(function (event) {
+			        event.preventDefault();
+			        if (event.which == 38) {
+			            $("#subtitles").focus();
+			        }
+			    });
+			}
 			
 			$("#watched").show();
 			$("#watched").click(function(event){
@@ -236,6 +293,9 @@ MediaMetadata.prototype.initialise = function()
 				self.toggleWatchedStatus();
 			});			
 			
+			
+
+
 			$("#play").attr("href",  "player.html?key=" + mediaItem.attr("key") + "&autoplay=true");
 			$("#play").show();
 			$("#play").focus();
@@ -251,6 +311,7 @@ MediaMetadata.prototype.initialise = function()
 MediaMetadata.prototype.getMediaChildren = function(mediaType, key) {
 	this.rowCount = 0;
 	var self = this;
+
 	
 	this.plex.getMediaMetadata(key, function(xml) {
 		mediaType = mediaType == "group" ? $(xml).find("MediaContainer:first").attr("viewGroup") : mediaType; 
@@ -564,6 +625,18 @@ MediaMetadata.prototype.toggleWatchedStatus = function()
 		});
 	}	
 };
+
+MediaMetadata.prototype.loadRelatedSeries = function()
+{
+    this.showLoader("Loading");
+    tmpKey = this.grandparentKey != "" ? this.grandparentKey : this.parentKey;
+
+    if (tmpKey != "")
+    {
+        $(this).attr("href", "item.html?action=preview&section=show&sectionKey=" + tmpKey + "/children&key=" + tmpKey + "/children");
+        location.href = $(this).attr("href");
+    }
+}
 
 MediaMetadata.prototype.subtitleDialog = function()
 {

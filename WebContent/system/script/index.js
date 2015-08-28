@@ -511,11 +511,11 @@ Menu.prototype.initialise = function(focus)	{
 					case "photo":	
 					case "show":			
 					case "artist":	
-				    	case "channels":
-				    	case "playlists":
-						self.showLoader("Loading");
-						location.href = "media.html?action=view&section=" + event.sectionType + "&key=" + event.key;
-						break;
+				    case "channels":
+				    case "playlists":
+					self.showLoader("Loading");
+					location.href = "media.html?action=view&section=" + event.sectionType + "&key=" + event.key;
+					break;
 				
 				}
 			});
@@ -554,10 +554,10 @@ Menu.prototype.initialise = function(focus)	{
 					case "artist":
 					case "ondeck":	
 				   	case "channels":
-				    	case "playlists":
-						localStorage.setItem(self.PLEX_CURRENT_SECTION, event.key);	
-						self.quickSelectionMenu(event);
-						break;							
+				    case "playlists":
+					localStorage.setItem(self.PLEX_CURRENT_SECTION, event.key);	
+					self.quickSelectionMenu(event);
+					break;							
 				}		
 			});	
 		}, function() {
@@ -625,7 +625,12 @@ Menu.prototype.quickSelectionMenu = function(event)
 	var maxItems = 30;
 	var options = {"start": 0,"size": maxItems};
 	
-	self.showLoader("Loading");
+    // playlist dont have the recentrly added filter
+	if (event.sectionType != "playlists")
+	{
+	    self.showLoader("Loading");
+	}
+	
 	//console.log(">>" + event.sectionType);
 	
 	self.plex.getMediaItems(event.sectionType, event.key, function(xml) {
