@@ -44,7 +44,7 @@ Player.prototype.initialise = function()
 	this.plex = new PLEX();
 	this.key = $.querystring().key;
 	this.media = document.getElementById("player");		
-	this.mediaSource = document.getElementById("mediaSource");		
+		
 
 	//Direct play via standalone player
 	if (self.directPlay) {
@@ -152,14 +152,7 @@ Player.prototype.initialise = function()
 				$("#progressTime").text("");
 	});
 	
-	// seek() after load()
-	this.media.addEventListener('canplay', function() {
-		this.hideLoader();
-		if (this.seekNewTime) {
-			this.seek(this.seekNewTime);
-			this.seekNewTime = 0;
-		}
-	}.bind(this));
+
 	
 	// Loader
 	this.media.addEventListener('seeking', function() {
@@ -416,8 +409,7 @@ Player.prototype.openMedia = function(key)
 			}			
 			
 			//Integrated player
-			self.mediaSource.src = self.plex.getServerUrl() + self.mediaUrl;
-			self.media.load();
+			
 			if ($(xml).find("Stream[streamType='2']").length <= 1) {
 				$("#language").hide();		
 			} else {
