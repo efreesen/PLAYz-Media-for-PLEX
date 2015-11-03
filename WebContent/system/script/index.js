@@ -1332,21 +1332,8 @@ Menu.prototype.setClock = function()
 {
 	var self = this;
 	
-	try {
-		var device = document.getElementById("device");
-		
-        var now = new Date();
-        $("#clock").text(now.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit', second:'2-digit'}));
-	
-		if (self.debug) {
-			if (window.NetCastGetUsedMemorySize) {
-				$("#debugMemory").text(window.NetCastGetUsedMemorySize());		
-			}
-		}	
-	} catch(err) {
-		var now = new Date();
-		$("#clock").text(now.toLocaleTimeString());	
-	}
+    var now = new Date();
+    $("#clock").text(now.toLocaleTimeString());	
 	clock = setTimeout(function(){self.setClock();}, 500);
 };
 
