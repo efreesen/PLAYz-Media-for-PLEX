@@ -216,38 +216,9 @@ Player.prototype.initialise = function()
 			return;
 		}
 
-		if (event.which == 37) { //left
-		    event.stopPropagation();
-		    event.preventDefault();
-		    self.rewind();
-		    $("#skipBackward").focus();
-		    return;
-		}
-
 		if (event.which == 38) { //Up
-		    event.stopPropagation();
-		    event.preventDefault();
-		    if (self.state == 'playing')
-		    {
-		        self.pause();
-		        $("#pause").focus();
-		    }
-		    else
-		    {
-		        self.speed = 1;
-		        self.play(self.speed);
-		        $("#play").focus();
-		    }
-		    
+			self.showControls();
 			return;
-		}
-		
-		if (event.which == 39) { //right
-		    event.stopPropagation();
-		    event.preventDefault();
-		    self.forward();
-		    $("#skipForward").focus();
-		    return;
 		}
         
 		if (event.which == 40) { //Down
@@ -260,6 +231,28 @@ Player.prototype.initialise = function()
 			}
 			return;
 		}
+        
+        if (event.which == 404) { //Green
+            self.pause();
+			self.infoBox();
+            $("#play").focus();
+			return;
+		}
+        
+        if (event.which == 405) { //Yellow
+            self.pause();
+			self.subtitleDialog();
+            $("#play").focus();
+			return;
+		}
+        
+        if (event.which == 406) { //Blue
+            self.pause();
+			self.languageDialog();
+            $("#play").focus();
+			return;
+		}
+        
 		if (event.which == 403 || event.which == 122) {
 		    self.plex.panic();
 		}

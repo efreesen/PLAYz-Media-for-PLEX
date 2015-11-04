@@ -1350,7 +1350,6 @@ Menu.prototype.hideLoader = function()
 
 Menu.prototype.close = function()
 {
-    	//alert("Close...");
 
     	this.plex.setShouldShowHiddenFiles("false");
 
