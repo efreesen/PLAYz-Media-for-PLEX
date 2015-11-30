@@ -1216,10 +1216,23 @@ Menu.prototype.settingsDialog = function(init)
 		self.scanErrorCount = 0;
 		self.scanFoundCount = 0;
 		if (!ip) {
-			ip = "10.0.0.1";
-		}
-		
-		self.showLoader("Scanning");
+            $.ajax({
+                url: 'http://10.0.0.1',
+                complete: function(xhr, textStatus) { ip = "10.0.0.1"; scanner(ip); }
+            });
+            $.ajax({
+                url: 'http://192.168.0.0',
+                complete: function(xhr, textStatus) { ip = "192.168.0.0"; scanner(ip); }
+            });
+            $.ajax({
+                url: 'http://192.168.0.1',
+                complete: function(xhr, textStatus) { ip = "192.168.0.1"; scanner(ip); }
+            });
+            
+		} else scanner(ip);
+	});
+    function scanner(ip) {
+        self.showLoader("Scanning");
 		$("#settingsMessage").html("");
 		$("#settingsMessage").show();
 		self.plex.scanNetwork(ip, function(xml) {
@@ -1245,8 +1258,7 @@ Menu.prototype.settingsDialog = function(init)
 			}
 			self.hideLoader();
 		});
-	});
-
+    }
 	$("#config .keypad").click(function(event) {
 		var key = $(this).text();
 		var pms = $("#pms").val();
