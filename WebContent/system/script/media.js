@@ -1,4 +1,4 @@
-﻿/**
+/**
 PLAYz Media (PLEX for LG Media Center)
 
 Copyright 2014 Simon J. Hogan (Sith'ari Consulting)
@@ -14,16 +14,15 @@ either express or implied. See the License for the specific language governing p
 and limitations under the License.
 **/
 
-function Media()
-{
-	this.PLEX_OPTIONS_PREFIX = "plexOptions-";	
+function Media() {
+	this.PLEX_OPTIONS_PREFIX = "plexOptions-";
 	this.PLEX_CURRENT_PREFIX = "plexSelected-";
 	this.PLEX_LAST_VIEW_PREFIX = "plexLastView-";
 	this.PLEX_LAST_SORT_PREFIX = "plexLastSort-";
-	this.PLEX_CURRENT_PAGE_PREFIX = "plexStartView-"
+	this.PLEX_CURRENT_PAGE_PREFIX = "plexStartView-";
 	
-	this.PLEX_VIEW_MODE = "plexViewMode";	
-	this.menuBarWidth = "60px";	
+	this.PLEX_VIEW_MODE = "plexViewMode";
+	this.menuBarWidth = "60px";
 	this.menuFlag = false;
 	this.titleScroll;
 	
@@ -38,17 +37,16 @@ function Media()
 	}
 	
 		
-};
+}
 
-Media.prototype.initialise = function()
-{
-	var self = this;
+Media.prototype.initialise = function () {
+    var self = this;
 	this.plex = new PLEX();
 	this.cache = "";
 	this.section = $.querystring().section;
 	this.key = $.querystring().key;
 	
-	this.currentView = localStorage.getItem(this.PLEX_LAST_VIEW_PREFIX + this.key) ? localStorage.getItem(this.PLEX_LAST_VIEW_PREFIX + this.key) : "all";	
+	this.currentView = localStorage.getItem(this.PLEX_LAST_VIEW_PREFIX + this.key) ? localStorage.getItem(this.PLEX_LAST_VIEW_PREFIX + this.key) : "all";
 	this.currentView = $.querystring().currentView ? $.querystring().currentView : this.currentView;
 	this.currentViewKey = $.querystring().currentViewkey;
 
@@ -83,45 +81,44 @@ Media.prototype.initialise = function()
 		html += "<tr><th>Platform</th><td>" + device.platform + "</td></tr>";
 		html += "<tr><th>Chipset</th><td>" + device.chipset + "</td></tr>";
 		html += "<tr><th>HW Version</th><td>" + device.hwVersion + "</td></tr>";
-		html += "<tr><th>SW Version</th><td>" + device.hwVersion + "</td></tr>";		
+		html += "<tr><th>SW Version</th><td>" + device.hwVersion + "</td></tr>";
 		html += "<tr><th>SDK Version</th><td>" + device.SDKVersion + "</td></tr>";
-		html += "<tr><th>IP</td><th>" + device.net_ipAddress + "</td></tr>";		
+		html += "<tr><th>IP</td><th>" + device.net_ipAddress + "</td></tr>";
 		html += "<tr><th>Language</td><th>" + device.tvLanguage2 + "</td></tr>";
 		html += "<tr><th>show hidden files</td><th>" + self.plex.getShouldShowHiddenFiles() + "</td></tr>";
 		
 		if (window.NetCastGetUsedMemorySize) {
-			html += "<tr><th>Used Memory</th><td id=\"debugMemory\">" + window.NetCastGetUsedMemorySize() + "</td></tr>";		
+			html += "<tr><th>Used Memory</th><td id=\"debugMemory\">" + window.NetCastGetUsedMemorySize() + "</td></tr>";
 		}
 		html += "</table>";
-		$("#debug").html(html);				
+		$("#debug").html(html);
 		$("#debug").show();
-		this.setDebug();		
+		this.setDebug();
 	}
 	
 	$(document).keydown(function(event) {
 		switch (event.which) {
-			case 461:
-			case 27:
-				event.preventDefault();
-				self.clearDefaults();
-				history.back(1);
-				break;
-								
-			case 33:
-		    case 403:
-      
-                	self.plex.panic();
-		        break;
-			case 412: //Prev page
-				self.prevPage();
-				break;
-				
-			case 34:
-			case 406:
-			case 417: //Next Page
-				self.nextPage();
-				break;	
-		}	
+        case 461:
+        case 27:
+            event.preventDefault();
+            self.clearDefaults();
+            history.back(1);
+            break;
+
+        case 33:
+        case 403:
+            self.plex.panic();
+            break;
+        case 412: //Prev page
+            self.prevPage();
+            break;
+
+        case 34:
+        case 406:
+        case 417: //Next Page
+            self.nextPage();
+            break;
+		}
 	});
 	
 	$("#menu a").hover(function() {
@@ -143,7 +140,7 @@ Media.prototype.initialise = function()
 			if ($(this).data("keyDown")) {
 				$($(this).data("keyDown")).focus();
 				event.preventDefault();
-			}	
+			}
 		}
 		
 		// Left Arrow
@@ -163,45 +160,40 @@ Media.prototype.initialise = function()
 				}
 				event.preventDefault();
 			}
-		}		
-	});	
+		}
+	});
 	
 	switch($.querystring().action) {
-		case "view":
-		    	if (this.section == "channels") {
-				$("#filter").hide();
-			} else {
-				this.loadMenu(this.section, this.key);
-			}
-			this.view(this.section, this.key, this.currentView, this.currentViewKey, this.currentSort, this.viewStart);	
-			break;
-			
-		case "search":
-			$("#filter").hide();
-			this.view(this.section, this.key, "search", this.query, this.currentSort, this.viewStart);
-			break;			
+    case "view":
+        if (this.section == "channels")
+            $("#filter").hide();
+        else
+            this.loadMenu(this.section, this.key);
+        this.view(this.section, this.key, this.currentView, this.currentViewKey, this.currentSort, this.viewStart);
+        break;
+
+     case "search":
+        $("#filter").hide();
+        this.view(this.section, this.key, "search", this.query, this.currentSort, this.viewStart);
+        break;
 	}
 };
 
-Media.prototype.toggleMenu = function()
-{
-	if (this.menuFlag) {
+Media.prototype.toggleMenu = function() {
+	if (this.menuFlag)
 		this.hideMenu();
-	} else {
+	else
 		this.showMenu();
-	}	
 };
 
-Media.prototype.showMenu = function()
-{
+Media.prototype.showMenu = function() {
 	$("#menuBar").css("width", "270px");
 	$("#menuFilter").fadeIn();	
 	this.menuFlag = true;
 	$("#menuFilterContent a:first").focus();	
 };
 
-Media.prototype.hideMenu = function()
-{
+Media.prototype.hideMenu = function() {
 	$("#menuBar").css("width", this.menuBarWidth);
 	$("#menuFilter").hide();	
 	this.menuFlag = false;	
@@ -214,13 +206,10 @@ Media.prototype.clearDefaults = function()
 };
 
 
-Media.prototype.nextPage = function()
-{
+Media.prototype.nextPage = function() {
 	if (this.viewStart+this.viewSize+1 <= this.viewTotal) {
 		localStorage.removeItem(self.PLEX_CURRENT_PREFIX + self.key);
 		this.viewStart = this.viewStart+this.viewSize+1;
-		
-		//console.log(this.viewStart + ":" + this.viewSize);
 		
 		switch($.querystring().action) {
 			case "view":
@@ -240,13 +229,10 @@ Media.prototype.nextPage = function()
 	}
 };
 
-Media.prototype.prevPage = function()
-{
+Media.prototype.prevPage = function() {
 	if (this.viewStart-this.viewSize-1 >= 0) {
 		localStorage.removeItem(self.PLEX_CURRENT_PREFIX + self.key);
 		this.viewStart = this.viewStart-this.viewSize-1;
-
-		//console.log(this.viewStart + ":" + this.viewSize);
 					
 		switch($.querystring().action) {
 			case "view":
@@ -266,8 +252,7 @@ Media.prototype.prevPage = function()
 	}
 };
 
-Media.prototype.loadMenu = function(section, key)
-{
+Media.prototype.loadMenu = function(section, key) {
 	var i = 0;
 	var self = this;
 	this.showLoader("Loading");
@@ -299,7 +284,6 @@ Media.prototype.loadMenu = function(section, key)
 		    html = "<li><a href data-key-index=\"" + i++ + "\" data-action=\"view\" data-section=\"" + self.section + "\" data-key=\"" + self.key + "\" data-filter=\"" + $(this).attr("key") + "\" data-secondary=1\"" + "\">" + $(this).attr("title").replace("By ", "") + "</a></li>";
 		    $("#menuFilterContent ul").append(html);
 		});
-		//$("#menuFilterContent a, #menuFilterView a").off();
 	});
 
 	self.plex.getSectionFilterOptions(section, key, function (xml) {
@@ -379,7 +363,6 @@ Media.prototype.loadMenu = function(section, key)
 
 	    $("#menuFilterContent a").click(function (event) {
 
-//	        this.style.fontWeight = 'bold';
 	        switch ($(this).data("action"))
 	        {
 
@@ -488,8 +471,6 @@ Media.prototype.view = function(section, key, filter, filterKey, sort, start)
 	if (section == "playlists" || section == "channels") {
 	    filter = "all";
 	}
-
-	//console.log(key + " " + filter + " " + filterKey);
 	
 	// Load section content	
 	self.plex.getSectionMedia(section, key, filter, filterKey, sort, function (xml) {
@@ -498,11 +479,6 @@ Media.prototype.view = function(section, key, filter, filterKey, sort, start)
 		$("#title").stop(true, true);
 		$("#title").show();
 		self.viewTotal = $(xml).find("MediaContainer:first").attr("totalSize");
-
-		//console.log("Start: " + start);		
-		//console.log("Total: " + self.viewTotal);
-		//console.log("Filter: " + filter);
-		//console.log(self.viewTotal + " - " + self.viewSize + " - " + (self.viewTotal/self.viewSize));
 		
 		var totalPages = Math.ceil(self.viewTotal/self.viewSize);
 		var page = "<br/>Page " + (Math.round(start/self.viewSize+1)) + " of " + totalPages;
@@ -625,9 +601,7 @@ Media.prototype.view = function(section, key, filter, filterKey, sort, start)
 		});
 		
 		$("#title").fadeOut(8000);
-		self.rowCount = self.getRowCount("#mediaViewContent ul li");	
-
-		//console.log(self.rowCount);
+		self.rowCount = self.getRowCount("#mediaViewContent ul li");
 
 		$("#mediaViewContent a").focus(function(event) {
 			var item = $(this);
@@ -698,7 +672,6 @@ Media.prototype.view = function(section, key, filter, filterKey, sort, start)
 		// Handle Arrow Key Navigation
 		$("#mediaViewContent a").keydown(function(event) {
 			var index = $(this).data("key-index");
-			//console.log(Number(index) + " -- " + self.rowCount);
 			var left = (Number(index)%self.rowCount == 0) ? $("#back") : $(this).parents("#mediaView").find("li a[data-key-index='" + (Number(index)-1) + "']");
 			var right = $(this).parents("#mediaView").find("li a[data-key-index='" + (Number(index)+1) + "']");
 			var up = $(this).parents("#mediaView").find("li a[data-key-index='" + (Number(index)-self.rowCount) + "']");
