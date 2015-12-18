@@ -13,11 +13,10 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
 either express or implied. See the License for the specific language governing permissions 
 and limitations under the License.
 **/
-
 body {
-	margin: 0px;
-	background-color: #333;
-	font-family: Arial, Helvetica, sans-serif;
+	margin: 0;
+    background-color: #262626;
+    font-family: 'Monoton', Arial, Helvetica, sans-serif;
 	color: #fff;
 	font-size: 20px;
 }
@@ -28,8 +27,8 @@ body.xlarge {
 
 #applicationWallpaper {
 	position: absolute;
-	top: 0px;
-	left: 0px;	
+	top: 0;
+	left: 0;	
 	width: 100%;
 	height: 100%;	
     -webkit-box-sizing: border-box;  
@@ -39,8 +38,8 @@ body.xlarge {
 
 #application {
 	position: absolute;
-	top: 0px;
-	left: 0px;	
+	top: 0;
+	left: 0;	
 	width: 100%;
 	height: 100%;	
     -webkit-box-sizing: border-box;  	
@@ -50,8 +49,8 @@ body.xlarge {
 
 #navigator {
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	top: 0;
+	left: 0;
 	width: 350px;
 	height: 100%;	
 	background-color: rgba(5,5,5,0.8);
@@ -79,7 +78,7 @@ body.xlarge {
 #navigator #sections, #navigator #settings {
 	position: absolute;
 	top: 200px;
-	left: 0px;
+	left: 0;
 	height: 750px;	
 	width: 350px;
 	overflow-x: hidden;
@@ -89,8 +88,8 @@ body.xlarge {
 }
 
 #navigator #sections::-webkit-scrollbar {
-	height: 0px;
-	width: 0px;	
+	height: 0;
+	width: 0;	
 }
 
 #navigator #sections {
@@ -106,15 +105,15 @@ body.xlarge {
 }
 
 .menu ul {
-	margin: 0px 0px 0px 100px;
-	padding: 0px;
+	margin: 0 0 0 100px;
+	padding: 0;
 }
 
 .menu li {
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	list-style: none;
-    margin: 10px 0px;	
+    margin: 10px 0;	
     -webkit-box-sizing: border-box;  
     text-align: right;
 }
@@ -126,15 +125,15 @@ body.xlarge {
 	outline: none;
 	padding: 5px 20px 5px 5px;	
 	text-shadow: 1px 1px #333;	
-	font-size: 140%;			
+	font-size: 150%;			
 }
 
 .menu li a.selected {
-	color: #FF9900;
+	color: #FFB80D;
 	font-weight: bold;
 	padding: 10px 20px 10px 5px;
 	text-shadow: none;
-	font-size: 160%;	
+	font-size: 170%;	
 	background: transparent url('../images/menu-select.png') no-repeat right center;		
 }
 
@@ -144,10 +143,10 @@ body.xlarge {
 
 #media {
 	position: absolute;
-	top: 0px;
+	top: 0;
 	left: 352px;
 	height: 100%;	
-	right: 0px;		
+	right: 0;		
 }
 
 #server {
@@ -180,7 +179,7 @@ body.xlarge {
 }
 
 #serverSelect a:focus {
-	color: #ff9900;
+	color: #FFB80D;
 }
 	
 
@@ -230,23 +229,23 @@ body.xlarge {
 
 
 .action {
-	font-size: 120%;
+	font-size: 200%;
 	cursor: pointer;
 }
 
 .action:hover {
-	color: #FF9900;
+	color: #FFB80D;
 }
 
 .media-quick-menu {
 	position: absolute;
 	top: 300px;
 	left: -2px;
-	height: 280px;
+    height: 298px;
 	box-sizing: border-box;
     -webkit-box-sizing: border-box;          
 	background-color: rgba(5,5,5,0.4);
-	border-radius: 0px 5px 5px 0px; 
+	border-radius: 0 5px 5px 0; 
 	color: #fff; 
 	overflow: hidden;  
 	right: 20px;
@@ -256,15 +255,15 @@ body.xlarge {
 .media-quick-menu .content {
 	overflow-x: auto;
 	overflow-y: hidden;
-	height: 242px;
+	height: 260px;
     -webkit-box-sizing: border-box;  	
-    padding: 2px;
+    padding: 4px;
 	//width: 860px;    
 }
 
 .media-quick-menu .content::-webkit-scrollbar {
 	height: 4px;
-	width: 0px;	
+	width: 0;	
 }
 
 .media-quick-menu .content::-webkit-scrollbar-thumb {
@@ -284,15 +283,15 @@ body.xlarge {
 li.media {
 	display: inline-block;
 	padding: 0;
-	margin: 0 8px;
+	margin: 0 10px;
 	list-style: none;
 	position: relative;
 }
 
 li.media a {
 	display: block;
-	height: 225px;
-	width: 154px;	
+    height: 240px;
+    width: 182px;	
 	overflow: hidden;
 	text-align: center;
 	text-decoration: none;
@@ -307,8 +306,8 @@ li.media a {
 
 li.media a div.thumb {
 	display: block;
-	height: 222px;
-	width: 154px;
+    height: 238px;
+    width: 180px;
 	overflow: hidden;
 	text-align: center;
 	border-radius: 5px;
@@ -324,17 +323,16 @@ li.media a div.title {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-size: 90%;	
-	color: #FF9900;
+	color: #FFB80D;
 	padding: 2px;
 	text-align: center;
 	position: absolute;
 	bottom: 30px;	
 	background-color: rgba(3,3,3,0.5);  
-	width: 95.4%;		
+	width: 96%;		
 }
 
 li.media a div.alt {
-	font-size: 85%;	
 	color: #ffffff;
 }
 
@@ -342,27 +340,26 @@ li.media div.subtitle {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: 80%;
 	padding: 2px;
-	margin: 0px 2px;
+	margin: 0 2px;
 	text-align: center;		
 	position: absolute;
 	bottom: 2px;	
 	background-color: rgba(3,3,3,0.5);  
-    width: 148px;	
+    width: 176px;	
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
 }
-li.media.bigger div.subtitle { width: 200px; }
+li.media.bigger div.subtitle { width: 252px; }
 
 li.media a:focus {
-    border: 2px solid #ff9900;	
-	-webkit-box-shadow: 0px 0px 3px 3px rgba(100, 100, 100, .75);
-	box-shadow: 0px 0px 3px 3px rgba(100, 100, 100, .75);      
+    border: 2px solid #FFB80D;	
+	-webkit-box-shadow: 0 0 3px 3px rgba(100, 100, 100, .75);
+	box-shadow: 0 0 3px 3px rgba(100, 100, 100, .75);      
 }
 
 li.track, li.list {
-	margin: 0px;
+	margin: 0;
 	width: 780px;	
 	padding: 2px;
 	list-style: none;
@@ -396,10 +393,10 @@ li.track a, li.list a {
 }*/
 
 li.track a:focus, li.list a:focus  {
-	color: #ff9900;
-    border: 2px solid #ff9900;	
-	-webkit-box-shadow: 0px 0px 3px 3px rgba(100, 100, 100, .75);
-	box-shadow: 0px 0px 3px 3px rgba(100, 100, 100, .75); 
+	color: #FFB80D;
+    border: 2px solid #FFB80D;	
+	-webkit-box-shadow: 0 0 3px 3px rgba(100, 100, 100, .75);
+	box-shadow: 0 0 3px 3px rgba(100, 100, 100, .75); 
 }
 
 .listYear {
@@ -419,7 +416,7 @@ li.track a:focus, li.list a:focus  {
 }
 
 .media-quick-menu .name {
-	color: #FF9900;
+	color: #FFB80D;
 	text-align: right;
 	overflow: hidden;
 	min-height: 30px;
@@ -430,8 +427,8 @@ li.track a:focus, li.list a:focus  {
 
 #preview {
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	top: 0;
+	left: 0;
 	width: 350px;
 	height: 100%;	
 	background-color: rgba(1,1,1,0.98);
@@ -443,8 +440,8 @@ li.track a:focus, li.list a:focus  {
 
 #previewContent {
 	position: absolute;
-	top: 0px;
-	left: 0px;
+	top: 0;
+	left: 0;
 	width: 350px;
 	height: 100%;	
 	font-size: 100%;
@@ -462,18 +459,17 @@ li.track a:focus, li.list a:focus  {
 }
 
 .content .title {
-	color: #FF9900;
+	color: #FFB80D;
 	padding: 5px;
-	font-size: 100%;
+	font-size: 150%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;		
 }
 
 .content .subtitle {
-	color: #FF9900;
+	color: #FFB80D;
 	padding: 5px;
-	font-size: 90%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;		
@@ -481,15 +477,15 @@ li.track a:focus, li.list a:focus  {
 
 .content .tagline, #previewContent .artist {
 	color: #ccc;
-	padding: 5px;	
-	font-size: 90%;	
+	padding: 5px;
+    font-size: 110%;
 }
 
 .content .summary {
 	display: block;
 	color: #fff;
 	padding: 5px;	
-	font-size: 95%;
+    font-size: 120%;
 	overflow: hidden;
 	overflow: hidden;
 	max-height: 100%;
@@ -497,19 +493,16 @@ li.track a:focus, li.list a:focus  {
 
 .content .time {
 	color: #fff;
-	padding: 5px;	
-	font-size: 90%;	
+	padding: 5px;
 }
 
 .content .duration {
 	display: inline-block;
-	width: 48%;
 	text-align: left;	
 }
 
 .content .year {
 	display: inline-block;
-	width: 48%;
 	text-align: right;
 	float: right;
 }
@@ -517,7 +510,7 @@ li.track a:focus, li.list a:focus  {
 .content .roles {
 	color: #fff;
 	padding: 5px;	
-	font-size: 90%;	
+	font-size: 110%;	
 	max-height: 35px;
 	overflow: hidden;
 	text-overflow: ellipsis;	
@@ -525,7 +518,7 @@ li.track a:focus, li.list a:focus  {
 
 .content .roles:before {
 	color: #ccc;
-	font-size: 70%;	
+	font-size: 85%;	
 	content: "Cast: ";	
 	text-transform: uppercase;
 }
@@ -594,7 +587,7 @@ li.track a:focus, li.list a:focus  {
 .content div.genre {
 	color: #fff;
 	padding: 5px;
-	font-size: 90%;
+	font-size: 110%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -602,7 +595,7 @@ li.track a:focus, li.list a:focus  {
 
 .content div.genre:before {
 	color: #ccc;
-	font-size: 70%;	
+    font-size: 80%;	
 	content: "Genre: ";	
 	text-transform: uppercase;	
 }
@@ -610,7 +603,7 @@ li.track a:focus, li.list a:focus  {
 .content div.resolution {
 	color: #fff;
 	padding: 5px;
-	font-size: 90%;
+    font-size: 110%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -618,7 +611,7 @@ li.track a:focus, li.list a:focus  {
 
 .content div.resolution:before {
 	color: #ccc;
-	font-size: 70%;	
+    font-size: 80%;	
 	content: "Resolution: ";	
 	text-transform: uppercase;	
 }
@@ -626,7 +619,7 @@ li.track a:focus, li.list a:focus  {
 .content .director {
 	color: #fff;
 	padding: 5px;
-	font-size: 90%;
+    font-size: 110%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -634,7 +627,7 @@ li.track a:focus, li.list a:focus  {
 
 .content .director:before {
 	color: #ccc;
-	font-size: 70%;	
+    font-size: 80%;	
 	content: "Director: ";	
 	text-transform: uppercase;	
 }
@@ -642,7 +635,7 @@ li.track a:focus, li.list a:focus  {
 .content .writer {
 	color: #fff;
 	padding: 5px;
-	font-size: 90%;
+	font-size: 110%;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -650,31 +643,31 @@ li.track a:focus, li.list a:focus  {
 
 .content .writer:before {
 	color: #ccc;
-	font-size: 70%;	
+    font-size: 80%;	
 	content: "Writer: ";	
 	text-transform: uppercase;	
 }
 
 .content .audio {
 	padding: 5px;	
-	font-size: 90%;	
+    font-size: 110%;	
 }
 
 .content .audio:before {
 	color: #ccc;
-	font-size: 70%;	
+    font-size: 80%;	
 	content: "Audio: ";	
 	text-transform: uppercase;	
 }
 
 .content .subtitles {
 	padding: 5px;	
-	font-size: 90%;	
+    font-size: 110%;	
 }
 
 .content .subtitles:before {
 	color: #ccc;
-	font-size: 70%;	
+    font-size: 80%;	
 	content: "Subtitles: ";	
 	text-transform: uppercase;	
 }
@@ -683,22 +676,22 @@ li.track a:focus, li.list a:focus  {
 	position: absolute;
 	bottom: 30px;
 	right: 10px;
-	color: #FF9900;
+	color: #FFB80D;
 }
 
 .content .contentRating {
 	position: absolute;
 	top: 10px;
 	right: 10px;
-	color: #FF9900;
+	color: #FFB80D;
 }
 
 #previewContent .cover {
 	position: absolute;
 	top: 140px;
 	left: 240px;
-	color: #FF9900;
-	margin: 0px;
+	color: #FFB80D;
+	margin: 0;
 }
 
 #previewClose {
@@ -730,13 +723,14 @@ li.track a:focus, li.list a:focus  {
 }
 
 .dialog a:focus {
-	color: #ff9900;	
+	color: #FFB80D;	
 }
 
 .dialog .header {
 	background-color: rgba(1,1,1,0.5);	
-	color: #FF9900;
+	color: #FFB80D;
 	padding: 4px;
+    font-size: 120%;
 }
 
 .dialog .content {
@@ -762,7 +756,7 @@ li.track a:focus, li.list a:focus  {
 }
 
 .dialog input:focus, .dialog input:hover {
-	border-bottom: 2px solid #FF9900;
+	border-bottom: 2px solid #FFB80D;
 }
 
 .dialog table {
@@ -783,7 +777,7 @@ li.track a:focus, li.list a:focus  {
 }
 
 .dialog button:focus, .dialog button:hover {
-	color: #FF9900;
+	color: #FFB80D;
 }
 
 .dialog button:active {
@@ -809,19 +803,19 @@ li.track a:focus, li.list a:focus  {
 
 #mediaView {
 	position: absolute;
-	top: 5px;
-	left: 61px;
-	right: 0px;
-	bottom: 0px;
+	top: 10px;
+	left: 85px;
+	right: 0;
+	bottom: 0;
 	overflow: hidden; 	
 	-webkit-box-sizing: border-box;      
 }
 
 #mediaPreview {
 	position: absolute;
-	top: 0px;
-	left: 70px;
-	right: 0px;
+	top: 0;
+	left: 80px;
+	right: 0;
 	height: 100%;
 	overflow: hidden; 	
 	-webkit-box-sizing: border-box;      
@@ -829,9 +823,9 @@ li.track a:focus, li.list a:focus  {
 
 #mediaViewContent {
 	position: absolute;
-	top: 0px;
-	left: 0px;
-	right: 0px;
+	top: 0;
+	left: 0;
+	right: 0;
 	height: 100%;
 	overflow: auto;	
 	-webkit-box-sizing: border-box; 		
@@ -839,9 +833,9 @@ li.track a:focus, li.list a:focus  {
 
 #mediaPreviewContent {
 	position: absolute;
-	top: 0px;
-	left: 0px;
-	right: 0px;
+	top: 0;
+	left: 0;
+	right: 0;
 	height: 100%;
 	overflow: auto;	
 	-webkit-box-sizing: border-box; 
@@ -852,7 +846,7 @@ li.track a:focus, li.list a:focus  {
 	position: absolute;
 	height: 65px;
 	left: 60px;
-	right: 0px;
+	right: 0;
 	bottom: 20px;	
 	background-color: rgba(0,0,0,0.4);	
 	z-index: 1999;		
@@ -860,8 +854,8 @@ li.track a:focus, li.list a:focus  {
 
 .leftColumn {
 	position: absolute;	
-	top: 0px;
-	left: 0px;
+	top: 0;
+	left: 0;
 	width: 400px;
 	height: 100%;
 	background-color: rgba(0,0,0,0.6);		
@@ -891,15 +885,15 @@ li.track a:focus, li.list a:focus  {
 
 .rightColumn {
 	position: absolute;	
-	top: 0px;
+	top: 0;
 	left: 401px;
-	right: 0px;
-	bottom: 0px;
+	right: 0;
+	bottom: 0;
 	background-color: rgba(0,0,0,0.4);		
 	-webkit-box-sizing: border-box; 
 	padding: 5px;	
 	overflow: auto;
-	margin: 5px 0px;
+	margin: 5px 0;
 }
 
 .rightColumn::-webkit-scrollbar {
@@ -915,13 +909,12 @@ li.track a:focus, li.list a:focus  {
 }
 
 #children ul {
-	margin: 0px;
-	padding: 0px;	
+	margin: 0;
+	padding: 0;	
 }
 
 .rightColumn .title {
-	width: 70%;
-	font-size: 130%;	
+	font-size: 150%;	
 }
 
 .rightColumn div.genre {
@@ -929,7 +922,7 @@ li.track a:focus, li.list a:focus  {
 }
 
 .rightColumn .time {
-	font-size: 110%;	
+	font-size: 130%;	
 }
 
 .rightColumn .roles {
@@ -937,16 +930,16 @@ li.track a:focus, li.list a:focus  {
 }
 
 #mediaPreviewContent .movie .cover {
-	width: 300px;
-	height: 440px;
+	width: 400px;
+    height: 594px;
 }
 
 .movie .leftColumn {
-	width: 310px;
+	width: 410px;
 }
 
 .movie .rightColumn {
-	left: 311px;
+	left: 411px;
 }
 
 .photo .rightColumn .cover {
@@ -1026,7 +1019,7 @@ li.track a:focus, li.list a:focus  {
 }
 
 #mediaViewContent ul {
-	margin: 0px;
+	margin: 0;
 	padding: 5px;
 }
 
@@ -1057,10 +1050,10 @@ li.track a:focus, li.list a:focus  {
 
 #menuBar {
 	position: absolute;
-	left: 0px;
-	top: 0px;
+	left: 0;
+	top: 0;
 	height: 100%;
-	width: 70px;	
+	width: 80px;	
 	padding: 4px;	
 	background-color: rgba(0,0,0,0.92);	
 	-webkit-box-sizing: border-box;  
@@ -1068,7 +1061,7 @@ li.track a:focus, li.list a:focus  {
 }
 
 #menu {
-	width: 60px;
+	width: 70px;
 	height: 100%;
 	float: right;
 	background-color: rgba(0,0,0,0.5);		
@@ -1082,7 +1075,7 @@ li.track a:focus, li.list a:focus  {
 
 #menu li {
 	display: block;
-	margin: 0px 10px 0px 0px;
+	margin: 0 10px 0 0;
 	padding: 0;
 	list-style: none;	
 	float: left;
@@ -1091,9 +1084,9 @@ li.track a:focus, li.list a:focus  {
 #menu a {
 	display: inline-block;
 	text-decoration: none;
-	font-size: 40px;
+	font-size: 60px;
 	color: #ddd;	
-	padding: 5px 10px;
+	padding: 5px;
 	outline: none;	
 	border-radius: 4px;
 	opacity: 0.4;
@@ -1112,14 +1105,14 @@ li.track a:focus, li.list a:focus  {
 
 #menuFilterView ul {
 	padding: 5px 15px 5px 32px;
-	margin: 0px;
+	margin: 0;
 	font-size: 120%;
 	text-align: right;
 }
 
 #menuFilterView ul li {
 	display: inline-block;
-	margin: 0px;
+	margin: 0;
 	padding: 1px;
 }
 
@@ -1146,12 +1139,12 @@ li.track a:focus, li.list a:focus  {
 
 #menuFilterContent ul {
 	padding: 5px;
-	margin: 0px;
+	margin: 0;
 	font-size: 90%;
 }
 
 #menuFilterContent ul li {
-	margin: 0px;
+	margin: 0;
 	padding: 1px;
 }
 
@@ -1170,7 +1163,7 @@ li.track a:focus, li.list a:focus  {
 }
 
 #menuFilterContent ul li a:focus {
-	color: #FF9900;
+	color: #FFB80D;
 }
 
 #audioPlayer {
@@ -1182,7 +1175,7 @@ li.track a:focus, li.list a:focus  {
 }
 
 li.track .playing {
-	color: #FF9900;
+	color: #FFB80D;
 }
 
 .playing i:before {
@@ -1198,7 +1191,7 @@ li.track .playing {
 	margin-left: 10px;	
 	width: 20px;
 	height: 20px;
-	background-color: #f58200;
+	background-color: #FFB80D;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
@@ -1215,7 +1208,7 @@ li.track .playing {
 	display: block;
 	width: 10px;
 	height: 20px;
-	background-color: #f58200;
+	background-color: #FFB80D;
 	-webkit-border-radius: 0 10px 10px 0;
 	-moz-border-radius: 0 10px 10px 0;
 	border-radius: 0 10px 10px 0;
@@ -1257,8 +1250,8 @@ li.track .playing {
 
 #children li.episode a {
 	display: block;
-	height: 150px;
-	width: 232px;	
+    height: 242px;
+    width: 352px;	
 	overflow: hidden;
 	text-align: center;
 	text-decoration: none;
@@ -1272,8 +1265,7 @@ li.track .playing {
 
 #children li.episode a div.thumb {
 	display: block;
-	height: 150px;
-	width: 229px;
+    width: 349px;
 	overflow: hidden;
 	text-align: center;
 	border-radius: 5px;
@@ -1288,18 +1280,18 @@ li.track .playing {
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	font-size: 90%;	
-	color: #FF9900;
+	font-size: 100%;	
+	color: #FFB80D;
 	padding: 2px;
 	text-align: center;
 	position: absolute;
-	bottom: 30px;	
+	bottom: 34px;	
 	background-color: rgba(3,3,3,0.5);  
-	width: 196px;		
+	width: 347px;		
 }
 
 #children li.episode a div.alt {
-	font-size: 90%;	
+	font-size: 95%;	
 	color: #ffffff;
 }
 
@@ -1308,19 +1300,19 @@ li.track .playing {
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-size: 70%;
-	padding: 2px;
-	margin: 1px 0px;
+	padding: 4px;
+	margin: 1px;
 	text-align: center;		
 	position: absolute;
-	bottom: 5px;	
+    bottom: 3px;	
 	background-color: rgba(3,3,3,0.5);  
-	width: 228px;				
+    width: 342px;				
 }
 
 #children li.episode a:focus {
-    border: 2px solid #ff9900;	
-	-webkit-box-shadow: 0px 0px 3px 3px rgba(100, 100, 100, .75);
-	box-shadow: 0px 0px 3px 3px rgba(100, 100, 100, .75);      
+    border: 2px solid #FFB80D;	
+	-webkit-box-shadow: 0 0 3px 3px rgba(100, 100, 100, .75);
+	box-shadow: 0 0 3px 3px rgba(100, 100, 100, .75);      
 }
 
 #selectDialog {
@@ -1333,6 +1325,8 @@ li.track .playing {
 	z-index: 9999;	
 	color: #999;
 	border: 2px solid #333;
+    padding: 10px;
+    font-size: 120%;
 }
 
 #selectDialog  a {
@@ -1346,7 +1340,7 @@ li.track .playing {
 }
 
 #selectDialog  a:focus {
-	color: #ff9900;
+	color: #FFB80D;
 	background-color: rgba(50,50,50,0.8);	
 }
 
@@ -1357,11 +1351,10 @@ li.track .playing {
 
 #selectDialog .label {
 	color: #cccccc;
-	font-size: 90%;
 }
 
 #selectDialog .content{
-	max-height: 200px;
+	max-height: 400px;
 	overflow: auto;
 }
 
@@ -1405,16 +1398,16 @@ li.track .playing {
 
 .badge-lg {
 	padding: 4px 8px;
-	font-size: 16px;
-	border-radius: 10px;
+	font-size: 20px;
+	border-radius: 16px;
 }
 
 li.media.bigger a {
-	height: 286px;
-	width: 208px;
+    height: 360px;
+    width: 260px;
 }
 
 li.media a div.thumb.bigger {
-	height: 284px;
-	width: 204px;
+    height: 356px;
+    width: 256px;
 }

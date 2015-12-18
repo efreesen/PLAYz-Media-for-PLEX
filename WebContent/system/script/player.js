@@ -204,7 +204,7 @@ Player.prototype.initialise = function() {
 		}
 	});
 	
-	this.progessbar = $("#progressbar-container").progressbar({width: "700px", height: "10px"});
+    this.progessbar = $("#progressbar-container").progressbar({width: "700px", height: "15px"});
 
 	$("#controls a, .options a").tooltipster();
 	

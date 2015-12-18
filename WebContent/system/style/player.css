@@ -15,7 +15,7 @@ and limitations under the License.
 **/
 
 body {
-	margin: 0px;
+	margin: 0;
 	background-color: #333;
 	font-family: Arial, Helvetica, sans-serif;
 	color: #fff;
@@ -32,8 +32,8 @@ video {
 
 #applicationWallpaper {
 	position: absolute;
-	top: 0px;
-	left: 0px;	
+	top: 0;
+	left: 0;	
 	width: 100%;
 	height: 100%;	
     -webkit-box-sizing: border-box;  
@@ -42,8 +42,8 @@ video {
 
 #application {
 	position: absolute;
-	top: 0px;
-	left: 0px;	
+	top: 0;
+	left: 0;	
 	width: 100%;
 	height: 100%;	
     -webkit-box-sizing: border-box;  	
@@ -52,24 +52,24 @@ video {
 }
 
 #loader {
-	position: absolute;
-	bottom: 40px;
-	right: 40px;
-	width: 150px;
-	text-align: center;
-	border-radius: 5px;
-	border: 2px solid #666; 
-	padding: 5px;
-	color: #fff;
-	font-size: 18px;
-	background-color: rgba(10,10,10,0.8);	
+    position: absolute;
+    bottom: 100px;
+    right: 20px;
+    width: 170px;
+    text-align: center;
+    border-radius: 5px;
+    border: 2px solid #666; 
+    padding: 5px;
+    color: #fff;
+    font-size: 22px;
+    background-color: rgba(10,10,10,0.8);	
 }
 
 #controls {
 	position: absolute;
-	bottom: 20px;
-	left: 0px;
-	right: 0px;
+	bottom: 0;
+	left: 0;
+	right: 0;
 	padding-bottom: 8px;
 	text-align: center;
 	background-color: rgba(10,10,10,0.9);
@@ -77,14 +77,14 @@ video {
 }
 
 #controls ul.buttons {
-	margin: 0px;
+	margin: 0;
 	padding: 2px;
 }
 
 #controls ul.buttons li {
 	display: inline-block;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	list-style: none;
 	font-size: 45px;
 }
@@ -93,7 +93,7 @@ video {
 	position: absolute;
 	bottom: 38px;
 	left: 30px;
-	font-size: 32px;
+	font-size: 40px;
 	z-index: 9999;
 }
 
@@ -101,20 +101,20 @@ video {
 	position: absolute;
 	bottom: 38px;
 	right: 32px;
-	font-size: 30px;
+	font-size: 40px;
 	z-index: 9999;
 	text-align: right;
 }
 
 .options ul {
-	margin: 0px;
+	margin: 0;
 	padding: 2px;
 }
 
 .options ul li {
 	display: inline-block;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	list-style: none;
 }
 
@@ -132,10 +132,10 @@ a.selected {
 }
  
 #progressbar-container {
-    border-radius: 3px; 
+    border-radius: 10px; 
     overflow: hidden;
     display: inline-block;
-    margin: 1px 10px;
+    margin: 10px;
 	background-color: rgba(1,1,1,0.7);
 	border: 1px solid #666;
 }
@@ -147,7 +147,7 @@ a.selected {
 #progressTime {
 	position: absolute;
 	font-size: 20px;
-	top: 1px;
+	top: 9px;
 	left: 50%;	
 	margin-left: 370px; /* progessbar.width / 2 + 20 */
 }
@@ -168,8 +168,8 @@ a.selected {
 	position: absolute;
 	top: 32px;
 	left: 32px;
-	width: 600px;
-	max-height: 650px;
+	width: 700px;
+	max-height: 750px;
 	padding: 5px;
 	background-color: rgba(5,5,5,0.7); 
 	border-radius: 5px;	
@@ -195,11 +195,11 @@ a.selected {
 	overflow: auto;
 }
 
-#dialog  a {
+#dialog a {
 	display: block;	
 	text-align: left;
 	margin: 2px;
-	paddin: 2px;
+	padding: 2px;
 	background-color: rgba(0,0,0,0.8); 	
 }
 
@@ -257,7 +257,7 @@ a.selected {
 	padding: 5px;	
 	overflow: hidden;
 	overflow: hidden;
-	max-height: 140px;
+	max-height: 180px;
 }
 
 .content .time {
