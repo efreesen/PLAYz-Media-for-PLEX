@@ -16,20 +16,21 @@ and limitations under the License.
 
 function PLEX() {
 	this.PLEX_SESSION_ID = "plexSessionID";	
-	this.LG_PLEX_SERVER = "plexServerUrl";
-	this.PLEX_OPTIONS_PREFIX = "plexOptions-";	
-	this.PLEX_CACHE = "cache:";
-	this.PLEX_SHOW_HIDDEN_FILES = "plexHiddenFiles";
-	this.X_Plex_Client_Identifier = localStorage.getItem(this.PLEX_SESSION_ID);
-	this.X_Plex_Chunked = "1";
-	this.X_Plex_Product = "Plex%20Web";
-	this.X_Plex_Version = "2.4.9";
-	this.X_Plex_Platform = "Chrome";
-	this.X_Plex_Platform_Version = "7";
-	this.X_Plex_Version = "1.2.12";
-	this.X_Plex_Platform_Version = "43.0";
-	this.X_Plex_Device = "Windows";
-	this.X_Plex_Device_Name = "Plex%2FWeb%20(Chrome)";
+  this.LG_PLEX_SERVER = "plexServerUrl";
+  this.LG_PLEX_TOKEN = null;
+  this.PLEX_OPTIONS_PREFIX = "plexOptions-";  
+  this.PLEX_CACHE = "cache:";
+  this.PLEX_SHOW_HIDDEN_FILES = "plexHiddenFiles";
+  this.X_Plex_Client_Identifier = localStorage.getItem(this.PLEX_SESSION_ID);
+  this.X_Plex_Chunked = "1";
+  this.X_Plex_Product = "Plex%20Web";
+  this.X_Plex_Version = "2.4.9";
+  this.X_Plex_Platform = "Chrome";
+  this.X_Plex_Platform_Version = "7";
+  this.X_Plex_Version = "1.2.12";
+  this.X_Plex_Platform_Version = "43.0";
+  this.X_Plex_Device = "Windows";
+  this.X_Plex_Device_Name = "Plex%2FWeb%20(Chrome)";
 	
 	var d = new Date();
 	this.time = d.getTime();	
@@ -70,6 +71,14 @@ PLEX.prototype.getServerUrl = function() {
 	return localStorage.getItem(this.LG_PLEX_SERVER);    
 };
 
+PLEX.prototype.setServerToken = function(token) {
+  localStorage.setItem(this.LG_PLEX_TOKEN, token); 
+};
+
+PLEX.prototype.getServerToken = function() {
+  return localStorage.getItem(this.LG_PLEX_TOKEN);    
+};
+
 PLEX.prototype.getServerPort = function() {
 	return localStorage.getItem(this.LG_PLEX_SERVER).substr(localStorage.getItem(this.LG_PLEX_SERVER).lastIndexOf(":")+1);    
 };
@@ -78,12 +87,23 @@ PLEX.prototype.removeServerUrl = function() {
 	localStorage.removeItem(this.LG_PLEX_SERVER);    
 };
 
+PLEX.prototype.urlWithOptions = function(path = '', options = {}) {
+  var url = this.getServerUrl() + path,
+      query = this.getServerToken() ? ['X-Plex-Token=' + this.getServerToken()] : [];
+
+  for(var option in options) {
+    query.push(encodeURIComponent(option) + "=" + encodeURIComponent(options[option]))
+  }
+
+	url + '?' + query.join('&');
+};
+
 PLEX.prototype.getLibraryServer = function(callback) {
-	$.get(this.getServerUrl(), callback);
+  $.get(this.urlWithOptions(), callback);
 };
 
 PLEX.prototype.checkLibraryServerExists = function(callback, failCallback) {
-	$.ajax({url: this.getServerUrl(), 
+	$.ajax({url: this.urlWithOptions(), 
 		success: callback,
 		error: failCallback,
 		timeout: 20000
@@ -118,20 +138,20 @@ PLEX.prototype.getMediaType = function(title, sectionType) {
 
 // Media library functions 
 PLEX.prototype.getPlaylists = function (sortFormatted, callback) {
-    if (sortFormatted != "none")
-    {
-        $.get(this.getServerUrl() + "/playlists/all?sort=" + sortFormatted, callback); //all is for unfiltered
-    } else {
-        $.get(this.getServerUrl() + "/playlists/all", callback); //all is for unfiltered
-    }
+  var path = '/playlists/all',
+      options = {};
+
+  if (sortFormatted != "none") options['sort'] = sortFormatted;
+
+  this.urlWithOptions(path, options);
 };
 
 PLEX.prototype.removeHiddenToken = function (title) {
     return title.replace('[p]', '').replace('[P]','');
 }
+
 PLEX.prototype.isTreeContainsHiddenFiles = function(item, filter)
 {
-    
     var containsHiddenContent = false;
     var self = this;
 
@@ -204,26 +224,36 @@ PLEX.prototype.isTreeContainsHiddenFiles = function(item, filter)
 };
 
 PLEX.prototype.getSections = function(callback) {
-	$.get(this.getServerUrl() + "/library/sections", callback);
+  var path = "/library/sections";
+
+	$.get(this.urlWithOptions(path), callback);
 };
 
 PLEX.prototype.getSectionDetails = function(key, callback) {
-	$.get(this.getServerUrl() + "/library/sections/" + key , callback);
+  var path = "/library/sections" + key;
+
+  $.get(this.urlWithOptions(path), callback);
 };
 
 PLEX.prototype.getSectionFilterOptions = function (section, key, callback) {
-    if (section != "playlists" && section != "channels") {
-        $.get(this.getServerUrl() + "/library/sections/" + key + "/filters", callback);
-    }
+  if (section != "playlists" && section != "channels") {
+    var path = "/library/sections/" + key + "/filters";
+
+    $.get(this.urlWithOptions(path), callback);
+  }
 }
 
 PLEX.prototype.getSectionSortOptions = function (section, key, callback) {
-    if (section == "playlists")
-    {
-        $.get(this.getServerUrl() + "/playlists/sorts", callback);
-    } else if (section != "channels")  {
-        $.get(this.getServerUrl() + "/library/sections/" + key + "/sorts", callback);
-    }
+  var path = null;
+
+  if (section == "playlists")
+  {
+    path = "/playlists/sorts";
+  } else if (section != "channels")  {
+    path = "/library/sections/" + key + "/sorts";
+  }
+
+  if(path) $.get(this.urlWithOptions(path), callback);
 }
 
 
@@ -286,18 +316,23 @@ PLEX.prototype.getSectionMedia = function(section, key, view, viewKey, sort, cal
 };
 
 PLEX.prototype.getRecentlyAdded = function(key, callback) {
-	//$.get(this.getServerUrl() + "/library/sections/" + key + "/recentlyAdded?X-Plex-Container-Start=0&X-Plex-Container-Size=25&X-Plex-Access-Time=" + this.time, callback);
-	$.get(this.getServerUrl() + "/library/sections/" + key + "/recentlyAdded?X-Plex-Container-Start=0&X-Plex-Container-Size=25", callback);
+  var path = "/library/sections/" + key + "/recentlyAdded",
+      options = { "X-Plex-Container-Start": 0, "X-Plex-Container-Size": 25 };
 
+	$.get(this.urlWithOptions(path, options), callback);
 };
 
 PLEX.prototype.getOnDeck = function(key, callback) {
-	//$.get(this.getServerUrl() + "/library/onDeck?X-Plex-Container-Start=0&X-Plex-Container-Size=25&X-Plex-Access-Time=" + this.time, callback);
-	$.get(this.getServerUrl() + "/library/onDeck?X-Plex-Container-Start=0&X-Plex-Container-Size=25", callback);	
+  var path = "/library/onDeck",
+      options = { "X-Plex-Container-Start": 0, "X-Plex-Container-Size": 25 };
+
+	$.get(this.urlWithOptions(path, options), callback);
 };
 
 PLEX.prototype.getChannels = function(key, callback) {
-	$.get(this.getServerUrl() + "/channels/all", callback);
+  var path = "/channels/all";
+
+  $.get(this.urlWithOptions(path), callback);
 };
 
 //Helper function for main menu
@@ -329,44 +364,61 @@ PLEX.prototype.getMediaMetadata = function(key, callback) {
 };
 
 PLEX.prototype.reportProgress = function(key, state, time) {
-    $.get(this.getServerUrl() + "/:/progress?key=" + key + "&identifier=com.plexapp.plugins.library&time=" + Math.round(time) + "&state=" + state, null);
+  var path = "/:/progress",
+      options = { key: key, identifier: "com.plexapp.plugins.library", time: Math.round(time), state: state };
+
+  $.get(this.urlWithOptions(path, options), callback);
 };
 
 PLEX.prototype.setWatched = function(key, callback) {
-	$.get(this.getServerUrl() + "/:/scrobble?key=" + key + "&identifier=com.plexapp.plugins.library", callback);
+  var path = "/:/scrobble",
+      options = { key: key, identifier: "com.plexapp.plugins.library" };
+
+  $.get(this.urlWithOptions(path, options), callback);
 };
 
 PLEX.prototype.setUnwatched = function(key, callback) {
-	$.get(this.getServerUrl() + "/:/unscrobble?key=" + key + "&identifier=com.plexapp.plugins.library", callback);
+  var path = "/:/unscrobble",
+      options = { key: key, identifier: "com.plexapp.plugins.library" };
+
+  $.get(this.urlWithOptions(path, options), callback);
 };
 
 PLEX.prototype.setAudioStream = function(partKey, streamKey) {
+  var path = "/library/parts/" + partKey,
+      options = { audioStreamID: streamKey };
+
 	$.ajax({
 		type: "PUT",
-		url: this.getServerUrl() + "/library/parts/" + partKey + "?audioStreamID=" + streamKey
+		url: this.urlWithOptions(path, options)
 	});
 };
 
 PLEX.prototype.setSubtitleStream = function(partKey, streamKey) {
-	$.ajax({
-		type: "PUT",
-		url: this.getServerUrl() + "/library/parts/" + partKey + "?subtitleStreamID=" + streamKey
-	});
+  var path = "/library/parts/" + partKey,
+      options = { subtitleStreamID: streamKey };
+
+  $.ajax({
+    type: "PUT",
+    url: this.urlWithOptions(path, options)
+  });
 };
 
 PLEX.prototype.getTranscodedPath = function(path, width, height, remote) {
-	if (remote) {
-		return this.getServerUrl() + "/photo/:/transcode?url=" + encodeURIComponent(path) + "&width=" + width + "&height=" + height;		
-	} else {
-		return this.getServerUrl() + "/photo/:/transcode?url=" + encodeURIComponent("http://localhost:" + this.getServerPort() + path) + "&width=" + width + "&height=" + height;
-	}
+  var path = "/photo/:/transcode",
+      options = { width: width, height: height, url: encodeURIComponent("http://localhost:" + this.getServerPort() + path) };
+
+	if (remote) options.url = encodeURIComponent(path);
+
+  return this.urlWithOptions(path, options);
 };
 
 PLEX.prototype.getTranscodedMediaFlagPath = function(flag, value, width, height) {
-	return this.getServerUrl() + "/photo/:/transcode?url=" + encodeURIComponent("http://localhost:" + this.getServerPort() + "/system/bundle/media/flags/" + flag + "/" + value + "?t=" + new Date().getTime()) + "&width=" + width + "&height=" + height;
+  var path = "/photo/:/transcode",
+      options = { width: width, height: height, url: encodeURIComponent("http://localhost:" + this.getServerPort() + "/system/bundle/media/flags/" + flag + "/" + value + "?t=" + new Date().getTime()) };
+	
+  return this.urlWithOptions(path, options);
 };
-
-
 
 // HTML output functions
 PLEX.prototype.getThumbHtml = function(index, title, sectionType, mediaType, key, metadata) {
@@ -841,20 +893,25 @@ PLEX.prototype.getGenericTranscodeUrl = function(key, partKey, options) {
     var videoCodec = options.videoCodec || 'libx264'; // H.264: libx264
     var videoBitrate = options.videoBitrate || 3000;
 
-    var url = '/video/:/transcode/generic.'+format+'?';
-    url += 'identifier='+encodeURIComponent('com.plexapp.plugins.library');
-    url += '&format='+format;
-    url += '&videoCodec='+videoCodec+'&videoBitrate='+videoBitrate;
-    url += '&audioCodec='+audioCodec+'&audioBitrate='+audioBitrate;
-    url += '&size=1280x720';
-    url += '&width=1280&height=720';
-    url += '&quality='+quality;
-    url += '&fakeContentLength=2000000000';
-    url += '&offset='+offset;
-    url += '&key=' + encodeURIComponent('http://127.0.0.1:' + this.getServerPort() + key);
-    url += '&url=' + encodeURIComponent('http://127.0.0.1:' + this.getServerPort() + partKey);
+    var path = '/video/:/transcode/generic.'+format,
+        options = {
+                    identifier: encodeURIComponent('com.plexapp.plugins.library'),
+                    format: format,
+                    videoCodec: videoCodec,
+                    videoBitrate: videoBitrate,
+                    audioCodec: audioCodec,
+                    audioBitrate: audioBitrate,
+                    size: '1280x720',
+                    width: '1280',
+                    height: '720',
+                    quality: quality,
+                    fakeContentLength: '2000000000',
+                    offset: offset,
+                    key: encodeURIComponent('http://127.0.0.1:' + this.getServerPort() + key),
+                    url: encodeURIComponent('http://127.0.0.1:' + this.getServerPort() + partKey)
+                  }
 
-    return this.getServerUrl() + url;
+    return this.urlWithOptions(path, options);
 };
 
 PLEX.prototype.getHlsTranscodeUrl = function(key, options) {	
@@ -878,42 +935,45 @@ PLEX.prototype.getHlsTranscodeUrl = function(key, options) {
 	var copyts = options.copyTs || "1";
 	var acceptLanguage = options.acceptLanguage || "en";
 
-	var url = "/video/:/transcode/universal/start?";
-	url += "path=" + encodeURIComponent(path);
-	url += "&mediaIndex=" + mediaIndex;
-	url += "&partIndex=" + partIndex;
-	url += "&protocol=" + protocol;
-	url += "&offset=" + offset;
-	url += "&fastSeek=" + fastSeek;
-	url += "&directPlay=" + directPlay;
-	url += "&directStream=" + directStream;
-	url += "&videoQuality=" + videoQuality;	
-	url += "&audioBoost=" + audioBoost;
-	url += "&maxVideoBitrate=" + maxVideoBitrate;
-	url += "&subtitleSize=" + subtitleSize;
-	url += "&videoResolution=" + videoResolution;	
-	url += "&videoQuality=" + videoQuality;	
-	url += "&session=" + session;
-	url += "&subtitles=" + burn;
-	url += "&copyts=" + copyts;
-	url += "&Accept-Language=" + acceptLanguage;
-
+	var path = "/video/:/transcode/universal/start",
+      options = {
+                	path: encodeURIComponent(path),
+                	mediaIndex: mediaIndex,
+                	partIndex: partIndex,
+                	protocol: protocol,
+                	offset: offset,
+                	fastSeek: fastSeek,
+                	directPlay: directPlay,
+                	directStream: directStream,
+                	videoQuality: videoQuality;,
+                	audioBoost: audioBoost,
+                	maxVideoBitrate: maxVideoBitrate,
+                	subtitleSize: subtitleSize,
+                	videoResolution: videoResolution;,
+                	videoQuality: videoQuality;,
+                	session: session,
+                	subtitles: burn,
+                	copyts: copyts,
+                	"Accept-Language": acceptLanguage,
+                	"X-Plex-Client-Identifier": this.X_Plex_Client_Identifier,
+                	"X-Plex-Product": this.X_Plex_Product,
+                	"X-Plex-Device": this.X_Plex_Device,
+                	"X-Plex-Platform": this.X_Plex_Platform,
+                	"X-Plex-Platform-Version": this.X_Plex_Platform_Version,
+                	"X-Plex-Version": this.X_Plex_Version,
+                	"X-Plex-Device-Name": this.X_Plex_Device_Name
+                }
 	
-	url += "&X-Plex-Client-Identifier=" + this.X_Plex_Client_Identifier;
-	url += "&X-Plex-Product=" + this.X_Plex_Product;
-	url += "&X-Plex-Device=" + this.X_Plex_Device;
-	url += "&X-Plex-Platform=" + this.X_Plex_Platform;
-	url += "&X-Plex-Platform-Version=" + this.X_Plex_Platform_Version;
-	url += "&X-Plex-Version=" + this.X_Plex_Version;
-	url += "&X-Plex-Device-Name=" + this.X_Plex_Device_Name;
-	
-	return this.getServerUrl() + url;
+	return this.urlWithOptions(path, options);
 };
 
 PLEX.prototype.getTimeline = function(key, state, time, duration) {
+  var path = "/:/timeline",
+      options = { time: time, duration: duration, state: state, key: "%2Flibrary%2Fmetadata%2F" + key, ratingKey: key };
+
 	$.ajax({
 		type: "GET",		
-		url: this.getServerUrl() + "/:/timeline?time=" + time + "&duration=" + duration + "&state=" + state + "&key=%2Flibrary%2Fmetadata%2F" + key + "&ratingKey=" + key,
+		url: this.urlWithOptions(path, options),
 		headers: {"X-Plex-Client-Identifier": this.X_Plex_Client_Identifier,
 				"X-Plex-Product": this.X_Plex_Product,
 				"X-Plex-Device": this.X_Plex_Device,
@@ -926,9 +986,12 @@ PLEX.prototype.getTimeline = function(key, state, time, duration) {
 };
 
 PLEX.prototype.ping = function() {
+  var path = "/video/:/transcode/universal/ping",
+      options = { session: this.X_Plex_Client_Identifier };
+
 	$.ajax({
 		type: "GET",
-		url: this.getServerUrl() + "/video/:/transcode/universal/ping?session=" + this.X_Plex_Client_Identifier,
+		url: this.urlWithOptions(path, options),
 		headers: {"X-Plex-Client-Identifier": this.X_Plex_Client_Identifier,
 			"X-Plex-Product": this.X_Plex_Product,
 			"X-Plex-Device": this.X_Plex_Device,
